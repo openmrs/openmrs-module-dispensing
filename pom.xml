@@ -34,6 +34,9 @@
 	
 	<properties>
 		<openMRSVersion>1.9.3</openMRSVersion>
+		<uiframeworkVersion>2.5.2</uiframeworkVersion>
+		<appFrameworkVersion>2.0-SNAPSHOT</appFrameworkVersion>
+        <providermanagementModuleVersion>2.1-SNAPSHOT</providermanagementModuleVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -92,8 +95,84 @@
 				<scope>test</scope>
 			</dependency>
 			<!-- End OpenMRS core -->
+			
+			<dependency>
+	            <groupId>org.openmrs.module</groupId>
+	            <artifactId>uiframework-omod</artifactId>
+	            <version>${uiframeworkVersion}</version>
+	            <type>jar</type>
+	            <scope>provided</scope>
+        	</dependency>
+        	
+        	<dependency>
+	            <groupId>org.openmrs.module</groupId>
+	            <artifactId>appframework-omod</artifactId>
+	            <version>${appFrameworkVersion}</version>
+	            <type>jar</type>
+	            <scope>provided</scope>
+        	</dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>providermanagement-api</artifactId>
+                <version>${providermanagementModuleVersion}</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
 		</dependencies>
 	</dependencyManagement>
+
+    <dependencies>
+        <!-- Begin OpenMRS core -->
+        <dependency>
+            <groupId>org.openmrs.api</groupId>
+            <artifactId>openmrs-api</artifactId>
+            <type>jar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.web</groupId>
+            <artifactId>openmrs-web</artifactId>
+            <type>jar</type>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.api</groupId>
+            <artifactId>openmrs-api</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.web</groupId>
+            <artifactId>openmrs-web</artifactId>
+            <classifier>tests</classifier>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.test</groupId>
+            <artifactId>openmrs-test</artifactId>
+            <type>pom</type>
+            <scope>test</scope>
+        </dependency>
+        <!-- End OpenMRS core -->
+
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>providermanagement-api</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>appframework-omod</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>uiframework-omod</artifactId>
+        </dependency>
+    </dependencies>
 
 	<build>
 		<pluginManagement>

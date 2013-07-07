@@ -16,6 +16,7 @@ package org.openmrs.module.dispensing.api.impl;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.openmrs.module.dispensing.DispensingRequest;
 import org.openmrs.module.dispensing.api.DispensingService;
 import org.openmrs.module.dispensing.api.db.DispensingDAO;
 
@@ -34,11 +35,9 @@ public class DispensingServiceImpl extends BaseOpenmrsService implements Dispens
     public void setDao(DispensingDAO dao) {
 	    this.dao = dao;
     }
-    
-    /**
-     * @return the dao
-     */
-    public DispensingDAO getDao() {
-	    return dao;
+
+    @Override
+    public void dispense(DispensingRequest dispensingRequest) {
+        //TODO: implement
     }
 }

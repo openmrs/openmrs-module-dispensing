@@ -14,6 +14,7 @@
 package org.openmrs.module.dispensing.api;
 
 import org.openmrs.api.OpenmrsService;
+import org.openmrs.module.dispensing.DispensingRequest;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -29,8 +30,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 public interface DispensingService extends OpenmrsService {
      
-	/*
-	 * Add service methods here
-	 * 
-	 */
+	void dispense(DispensingRequest dispensingRequest);
 }

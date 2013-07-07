@@ -8,12 +8,16 @@
                 "id": "dispensing.app.homepageLink",
                 "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
                 "type": "link",
-                "label": "dispensing.app.dispensing.label",
-                "url": "dispensing/dispense.page?appId=dispensing.app",
+                "label": "dispensing.app.label",
+                "url": "dispensing/dispenseMedication.page?appId=dispensing.app",
                 "icon": "icon-shopping-cart",
                 "order": 1,
                 "requiredPrivilege": "App: dispensing.app.dispense"
             }
-        ]
+        ],
+        "config": {
+            "prescriberRoleUuids": ["4722ea3c-7efe-4b74-a1b8-71c3fd7c244e"]
+        }
+
     }
 ]
