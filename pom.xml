@@ -33,8 +33,8 @@
 	</modules>
 	
 	<properties>
-		<openMRSVersion>1.9.3</openMRSVersion>
-		<uiframeworkVersion>2.5.2</uiframeworkVersion>
+		<openMRSVersion>1.9.4-SNAPSHOT</openMRSVersion>
+		<uiframeworkVersion>2.6-SNAPSHOT</uiframeworkVersion>
 		<appFrameworkVersion>2.0-SNAPSHOT</appFrameworkVersion>
         <providermanagementModuleVersion>2.1-SNAPSHOT</providermanagementModuleVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -161,16 +161,6 @@
         <dependency>
             <groupId>org.openmrs.module</groupId>
             <artifactId>providermanagement-api</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openmrs.module</groupId>
-            <artifactId>appframework-omod</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>org.openmrs.module</groupId>
-            <artifactId>uiframework-omod</artifactId>
         </dependency>
     </dependencies>
 
