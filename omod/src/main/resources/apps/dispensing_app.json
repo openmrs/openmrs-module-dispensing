@@ -16,7 +16,9 @@
             }
         ],
         "config": {
-            "prescriberRoleUuids": ["4722ea3c-7efe-4b74-a1b8-71c3fd7c244e"]
+            "prescriberRoleUuids": [
+                "5bb62b1d-bd7b-4171-ade9-2c87f9876b87" // Application Role: Doctor
+            ]
         }
 
     }
