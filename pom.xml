@@ -33,9 +33,11 @@
 	</modules>
 	
 	<properties>
-		<openMRSVersion>1.9.4-SNAPSHOT</openMRSVersion>
-		<uiframeworkVersion>2.6-SNAPSHOT</uiframeworkVersion>
-		<appFrameworkVersion>2.0-SNAPSHOT</appFrameworkVersion>
+		<openMRSVersion>1.9.4</openMRSVersion>
+        <emrapiVersion>1.0-SNAPSHOT</emrapiVersion>
+        <uiframeworkVersion>3.0</uiframeworkVersion>
+        <appuiVersion>1.0-SNAPSHOT</appuiVersion>
+		<appframeworkVersion>2.0</appframeworkVersion>
         <providermanagementModuleVersion>2.1-SNAPSHOT</providermanagementModuleVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -95,22 +97,52 @@
 				<scope>test</scope>
 			</dependency>
 			<!-- End OpenMRS core -->
-			
-			<dependency>
-	            <groupId>org.openmrs.module</groupId>
-	            <artifactId>uiframework-omod</artifactId>
-	            <version>${uiframeworkVersion}</version>
-	            <type>jar</type>
-	            <scope>provided</scope>
-        	</dependency>
-        	
-        	<dependency>
-	            <groupId>org.openmrs.module</groupId>
-	            <artifactId>appframework-omod</artifactId>
-	            <version>${appFrameworkVersion}</version>
-	            <type>jar</type>
-	            <scope>provided</scope>
-        	</dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>uiframework-api</artifactId>
+                <version>${uiframeworkVersion}</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>emrapi-api</artifactId>
+                <version>${emrapiVersion}</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>appframework-api</artifactId>
+                <version>${appframeworkVersion}</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>appframework-api</artifactId>
+                <version>${appframeworkVersion}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>appui-api</artifactId>
+                <version>${appuiVersion}</version>
+                <type>jar</type>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>appui-api</artifactId>
+                <version>${appuiVersion}</version>
+                <type>test-jar</type>
+                <scope>test</scope>
+            </dependency>
 
             <dependency>
                 <groupId>org.openmrs.module</groupId>
@@ -157,6 +189,44 @@
             <scope>test</scope>
         </dependency>
         <!-- End OpenMRS core -->
+
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>appframework-api</artifactId>
+            <version>${appframeworkVersion}</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>appframework-api</artifactId>
+            <version>${appframeworkVersion}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>appui-api</artifactId>
+            <version>${appuiVersion}</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>appui-api</artifactId>
+            <version>${appuiVersion}</version>
+            <type>test-jar</type>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>uiframework-api</artifactId>
+            <version>${uiframeworkVersion}</version>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
 
         <dependency>
             <groupId>org.openmrs.module</groupId>

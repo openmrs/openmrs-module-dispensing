@@ -1,0 +1,15 @@
+[
+    {
+        "id": "dispensing.app",
+        "extensionPointId": "org.openmrs.referenceapplication.homepageLink",
+        "type": "link",
+        "label": "dispensing.app.label",
+        "url": "dispensing/findPatient.page",
+        "icon": "icon-medicine",
+        "order": 12,
+        "requiredPrivilege": "App: dispensing.app.dispense",
+        "extensionParams": {
+            "featureToggle": "dispenseMedicine"
+        }
+    }
+]
