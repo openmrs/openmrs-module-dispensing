@@ -1,11 +1,15 @@
 package org.openmrs.module.dispensing.page.controller;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.openmrs.Encounter;
 import org.openmrs.Form;
 import org.openmrs.Location;
 import org.openmrs.Patient;
 import org.openmrs.api.FormService;
 import org.openmrs.module.appui.UiSessionContext;
+import org.openmrs.module.dispensing.DispensedMedication;
+import org.openmrs.module.dispensing.api.DispensingService;
 import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
 import org.openmrs.module.emrapi.visit.VisitDomainWrapper;
@@ -22,12 +26,15 @@ import java.util.List;
 
 public class PatientPageController {
 
+    private static final Log log = LogFactory.getLog(PatientPageController.class);
+
     public void controller(@RequestParam("patientId") Patient patient,
                            UiUtils ui,
                            UiSessionContext emrContext,
                            PageModel model,
                            @SpringBean("formService") FormService formService,
                            @SpringBean("adtService") AdtService adtService,
+                           @SpringBean("dispensingService") DispensingService dispensingService,
                            @InjectBeans PatientDomainWrapper patientDomainWrapper) {
 
         patientDomainWrapper.setPatient(patient);
@@ -49,6 +56,13 @@ public class PatientPageController {
                 }
             }
         }
+        //get all dispensing encounters
+        /*
+        List<DispensedMedication> dispensedMedicationList = dispensingService.getDispensedMedication(patient, null, null, null, null, null);
+        for (DispensedMedication dispensedMedication : dispensedMedicationList) {
+            log.error("drugName= " + dispensedMedication.getDrug().getDisplayName());
+        }
+        */
 
         model.addAttribute("visit", activeVisit != null ? activeVisit.getVisit() : null);
         model.addAttribute("existingEncounters", existingEncounters);

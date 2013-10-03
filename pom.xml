@@ -38,6 +38,8 @@
         <uiframeworkVersion>3.0</uiframeworkVersion>
         <appuiVersion>1.0-SNAPSHOT</appuiVersion>
 		<appframeworkVersion>2.0</appframeworkVersion>
+        <htmlformentryVersion>2.3-SNAPSHOT</htmlformentryVersion>
+        <htmlformentryuiVersion>1.0-SNAPSHOT</htmlformentryuiVersion>
         <providermanagementModuleVersion>2.1-SNAPSHOT</providermanagementModuleVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
@@ -131,11 +133,26 @@
 
             <dependency>
                 <groupId>org.openmrs.module</groupId>
+                <artifactId>htmlformentry-api</artifactId>
+                <version>${htmlformentryVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
+                <artifactId>htmlformentryui-api</artifactId>
+                <version>${htmlformentryuiVersion}</version>
+                <scope>provided</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.openmrs.module</groupId>
                 <artifactId>appui-api</artifactId>
                 <version>${appuiVersion}</version>
                 <type>jar</type>
                 <scope>provided</scope>
             </dependency>
+
             <dependency>
                 <groupId>org.openmrs.module</groupId>
                 <artifactId>appui-api</artifactId>
@@ -195,6 +212,20 @@
             <artifactId>appframework-api</artifactId>
             <version>${appframeworkVersion}</version>
             <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>htmlformentry-api</artifactId>
+            <version>${htmlformentryVersion}</version>
+            <scope>provided</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>htmlformentryui-api</artifactId>
+            <version>${htmlformentryuiVersion}</version>
             <scope>provided</scope>
         </dependency>
 

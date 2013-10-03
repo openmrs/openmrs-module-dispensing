@@ -13,9 +13,15 @@
  */
 package org.openmrs.module.dispensing.api;
 
+import org.openmrs.Location;
+import org.openmrs.Patient;
 import org.openmrs.api.OpenmrsService;
+import org.openmrs.module.dispensing.DispensedMedication;
 import org.openmrs.module.dispensing.DispensingRequest;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Date;
+import java.util.List;
 
 /**
  * This service exposes module's core functionality. It is a Spring managed bean which is configured in moduleApplicationContext.xml.
@@ -31,4 +37,6 @@ import org.springframework.transaction.annotation.Transactional;
 public interface DispensingService extends OpenmrsService {
      
 	void dispense(DispensingRequest dispensingRequest);
+
+    List<DispensedMedication> getDispensedMedication(Patient patient, List<Location> locations, Date fromDate, Date toDate, Integer index, Integer count);
 }

@@ -2,15 +2,23 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>org.openmrs.module</groupId>
-		<artifactId>dispensing</artifactId>
-		<version>1.0-SNAPSHOT</version>
-	</parent>
+    <parent>
+        <groupId>org.openmrs.module</groupId>
+        <artifactId>dispensing</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
 
-	<artifactId>dispensing-api</artifactId>
-	<packaging>jar</packaging>
-	<name>Dispensing Module API</name>
-	<description>API project for Dispensing</description>
+    <artifactId>dispensing-api</artifactId>
+    <packaging>jar</packaging>
+    <name>Dispensing Module API</name>
+    <description>API project for Dispensing</description>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>emrapi-api</artifactId>
+            <version>${emrapiVersion}</version>
+        </dependency>
+    </dependencies>
 
 </project>
