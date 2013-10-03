@@ -40,7 +40,7 @@
 		<appframeworkVersion>2.0</appframeworkVersion>
         <htmlformentryVersion>2.3-SNAPSHOT</htmlformentryVersion>
         <htmlformentryuiVersion>1.0-SNAPSHOT</htmlformentryuiVersion>
-        <providermanagementModuleVersion>2.1-SNAPSHOT</providermanagementModuleVersion>
+        <providermanagementModuleVersion>2.1</providermanagementModuleVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
