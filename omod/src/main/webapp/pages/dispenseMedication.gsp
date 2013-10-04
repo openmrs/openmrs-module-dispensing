@@ -1,4 +1,4 @@
-<%
+    <%
     if (sessionContext.authenticated && !sessionContext.currentProvider) {
         throw new IllegalStateException("Logged-in user is not a Provider")
     }
