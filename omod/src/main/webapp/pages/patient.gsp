@@ -9,6 +9,8 @@
         { label: "${ ui.message("dispensing.app.label") }", link: "${ ui.pageLink("dispensing", "findPatient") }" },
         { label: "${ ui.format(patient.patient.familyName) }, ${ ui.format(patient.patient.givenName) }" , link: '${ui.pageLink("coreapps", "patientdashboard/patientDashboard", [patientId: patient.id])}'},
     ];
+
+    var medicationListSize = "${ dispensedMedicationList.size() }";
 </script>
 
 ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ]) }
@@ -16,8 +18,9 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
 <script type="text/javascript">
     jq(function() {
 
-        jq("#medicationTable").dataTable({});
-
+        if (parseInt (medicationListSize, 10) > 0 ){
+            jq("#medicationTable").dataTable({});
+        }
         jq('#actions .cancel').click(function() {
             emr.navigateTo({
                 provider: "dispensing",

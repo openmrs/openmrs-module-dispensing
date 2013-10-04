@@ -19,6 +19,7 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -56,6 +57,8 @@ public class PatientPageController {
                 log.error("duration: " + dispensedMedication.getMedicationDuration().getDuration().toString() + " " + dispensedMedication.getMedicationDuration().getTimeUnits());
                 log.error("quantity dispensed: " + dispensedMedication.getQuantityDispensed().toString());
             }
+        }else{
+            dispensedMedicationList = new ArrayList<DispensedMedication>();
         }
         model.addAttribute("dispensedMedicationList", dispensedMedicationList);
 
