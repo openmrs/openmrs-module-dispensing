@@ -29,6 +29,7 @@ import org.openmrs.module.dispensing.api.db.DispensingDAO;
 import org.openmrs.module.dispensing.descriptor.DispensingConceptSetDescriptor;
 import org.openmrs.module.emrapi.EmrApiProperties;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -73,7 +74,6 @@ public class DispensingServiceImpl extends BaseOpenmrsService implements Dispens
     @Override
     public List<DispensedMedication> getDispensedMedication(Patient patient, List<Location> locations, Date fromDate, Date toDate, Integer index, Integer count) {
         List<DispensedMedication> dispensedMedications = null;
-        emrApiProperties.getEmrApiConceptSource();
         DispensingConceptSetDescriptor dispensingConceptSetDescriptor = new DispensingConceptSetDescriptor(conceptService);
         List<Obs> observations = obsService.getObservations(Arrays.asList((Person) patient)
                 , null
@@ -81,11 +81,27 @@ public class DispensingServiceImpl extends BaseOpenmrsService implements Dispens
                 , null, null
                 , locations, Arrays.asList("obsDatetime"), null, null
                 , fromDate, toDate, false);
+        if (observations != null && observations.size() > 0 ){
+            dispensedMedications = new ArrayList<DispensedMedication>();
+            for (Obs observation : observations) {
+                log.error("obsId" + observation.getId().toString());
 
-        for (Obs observation : observations) {
-            log.error("obsId" + observation.getId().toString());
+                DispensedMedication dispensedMedication;
+                try {
+                    dispensedMedication = dispensingConceptSetDescriptor.toDispensedMedication(observation);
+                }
+                catch (Exception e) {
+                    log.warn("Error trying to interpret " + observation + " as a dispensed medication");
+                    if (log.isDebugEnabled()) {
+                        log.debug("Error trying to interpret obs as dispensed medication", e);
+                    }
+                    continue;
+                }
+                if (dispensedMedication != null){
+                    dispensedMedications.add(dispensedMedication);
+                }
+            }
         }
-
 
 
         return dispensedMedications;

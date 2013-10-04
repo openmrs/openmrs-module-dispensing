@@ -1,11 +1,14 @@
 package org.openmrs.module.dispensing.descriptor;
 
+import org.apache.commons.lang.StringUtils;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
 import org.openmrs.Obs;
 import org.openmrs.api.ConceptService;
 import org.openmrs.module.dispensing.DispensedMedication;
 import org.openmrs.module.dispensing.DispensingApiConstants;
+import org.openmrs.module.dispensing.MedicationDose;
+import org.openmrs.module.dispensing.MedicationDuration;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptor;
 
@@ -26,7 +29,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
                 "medicationOrdersConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_ORDERS,
                 "quantityOfMedicationDispensedConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_DISPENSED,
                 "generalDrugFrequencyConcept", DispensingApiConstants.CONCEPT_CODE_GENERAL_DRUG_FREQUENCY,
-                "quantityOfMedicationPrescribedPerDose", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_PRESCRIBED_PER_DOSE,
+                "quantityOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_PRESCRIBED_PER_DOSE,
                 "unitsOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_UNITS_OF_MEDICATION_PRESCRIBED_PER_DOSE,
                 "medicationDurationConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_DURATION,
                 "timeUnitsConcept", DispensingApiConstants.CONCEPT_CODE_TIME_UNITS);
@@ -108,16 +111,61 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
             throw new IllegalArgumentException("Not an obs group for a dispensed diagnosis" + obsGroup);
         }
         DispensedMedication dispensedMedication = new DispensedMedication();
-        Obs medicationOrdered = findMember(obsGroup, medicationOrdersConcept);
-        if (medicationOrdered == null){
+        dispensedMedication.setDispensedDateTime(obsGroup.getEncounter().getEncounterDatetime());
+        Obs obs = findMember(obsGroup, medicationOrdersConcept);
+        if (obs == null){
             throw new IllegalArgumentException("Obs group does not contain a drug observation: " + obsGroup);
         }
-        Drug drug = medicationOrdered.getValueDrug();
+        Drug drug = obs.getValueDrug();
         if (drug == null ){
-            throw new IllegalArgumentException("Obs group does not contain a drug: " + medicationOrdered);
+            throw new IllegalArgumentException("Obs group does not contain a drug: " + obs);
         }
         dispensedMedication.setDrug(drug);
-
+        obs = findMember(obsGroup, quantityOfMedicationPrescribedPerDoseConcept);
+        Integer dose = null;
+        if (obs != null) {
+            Double valueNumeric = obs.getValueNumeric();
+            if (valueNumeric != null) {
+                dose = new Integer(valueNumeric.intValue());
+            }
+        }
+        obs = findMember(obsGroup, unitsOfMedicationPrescribedPerDoseConcept);
+        String units = null;
+        if (obs != null){
+            units = obs.getValueText();
+        }
+        if (dose != null && StringUtils.isNotBlank(units)){
+            dispensedMedication.setMedicationDose(new MedicationDose(dose, units));
+        }
+        obs = findMember(obsGroup, generalDrugFrequencyConcept);
+        if (obs != null){
+            String frequency = obs.getValueText();
+            if (StringUtils.isNotEmpty(frequency)){
+                dispensedMedication.setPrescribedFrequency(frequency);
+            }
+        }
+        obs = findMember(obsGroup, medicationDurationConcept);
+        Integer duration = null;
+        if (obs != null) {
+            Double valueNumeric = obs.getValueNumeric();
+            if (valueNumeric != null){
+                duration = new Integer(valueNumeric.intValue());
+            }
+        }
+        obs = findMember(obsGroup, timeUnitsConcept);
+        if (obs != null) {
+            units = obs.getValueCoded().getName().getName();
+        }
+        if (duration != null && StringUtils.isNotEmpty(units)){
+            dispensedMedication.setMedicationDuration(new MedicationDuration(duration, units));
+        }
+        obs = findMember(obsGroup, quantityOfMedicationDispensedConcept);
+        if (obs != null) {
+            Double valueNumeric = obs.getValueNumeric();
+            if (valueNumeric != null) {
+                dispensedMedication.setQuantityDispensed(new Integer(valueNumeric.intValue()));
+            }
+        }
         return dispensedMedication;
 
     }

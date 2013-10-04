@@ -1,5 +1,6 @@
 <%
     ui.decorateWith("appui", "standardEmrPage")
+    ui.includeJavascript("uicommons", "datatables/jquery.dataTables.min.js")
 %>
 
 <script type="text/javascript">
@@ -14,6 +15,9 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
 
 <script type="text/javascript">
     jq(function() {
+
+        jq("#medicationTable").dataTable({});
+
         jq('#actions .cancel').click(function() {
             emr.navigateTo({
                 provider: "dispensing",
@@ -60,34 +64,41 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
         </button>
     </div>
 
-    <div id="existing-encounters">
-        <h3>${ ui.message("dispensing.medication.duringThisVisit") }</h3>
-        <table>
+    <div id="medication-list">
+        <h3>${ ui.message("dispensing.medication.lastDispensed") }</h3>
+        <table id="medicationTable">
             <thead>
             <tr>
-                <th>${ ui.message("coreapps.vitals.when") }</th>
-                <th>${ ui.message("coreapps.vitals.where") }</th>
-                <th>${ ui.message("coreapps.vitals.enteredBy") }</th>
+                <th>${ ui.message("coreapps.patientDashBoard.date") }</th>
+                <th>${ ui.message("dispensing.medication.name") }</th>
+                <th>${ ui.message("dispensing.medication.dose") }</th>
+                <th>${ ui.message("dispensing.medication.frequency") }</th>
+                <th>${ ui.message("dispensing.medication.duration") }</th>
+                <th>${ ui.message("dispensing.medication.dispensed") }</th>
             </tr>
             </thead>
             <tbody>
-            <% if (existingEncounters.size() == 0) { %>
+            <% if (dispensedMedicationList.size() == 0) { %>
             <tr>
-                <td colspan="3">${ ui.message("coreapps.none") }</td>
+                <td colspan="5">${ ui.message("coreapps.none") }</td>
             </tr>
             <% } %>
-            <% existingEncounters.each { enc ->
-                def minutesAgo = (long) ((System.currentTimeMillis() - enc.encounterDatetime.time) / 1000 / 60)
+            <% dispensedMedicationList.each { medication ->
+                // def minutesAgo = (long) ((System.currentTimeMillis() - enc.encounterDatetime.time) / 1000 / 60)
             %>
             <tr>
-                <td>${ ui.message("coreapps.vitals.minutesAgo", minutesAgo) }</td>
-                <td>${ ui.format(enc.location) }</td>
-                <td>${ ui.format(enc.creator) }</td>
+                <td>${ ui.format(medication.dispensedDateTime) }</td>
+                <td>${ ui.format(medication.drug.displayName) }</td>
+                <td>${ ui.format(medication.medicationDose.dose) + " " + medication.medicationDose.units }</td>
+                <td>${ ui.format(medication.prescribedFrequency) }</td>
+                <td>${ ui.format(medication.medicationDuration.duration) + " " + medication.medicationDuration.timeUnits }</td>
+                <td>${ ui.format(medication.quantityDispensed) }</td>
             </tr>
             <% } %>
             </tbody>
         </table>
     </div>
+
 </div>
 
 <% } else { %>

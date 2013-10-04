@@ -2,7 +2,6 @@ package org.openmrs.module.dispensing.page.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.openmrs.Encounter;
 import org.openmrs.Form;
 import org.openmrs.Location;
 import org.openmrs.Patient;
@@ -20,7 +19,6 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -48,24 +46,20 @@ public class PatientPageController {
         Location visitLocation = adtService.getLocationThatSupportsVisits(emrContext.getSessionLocation());
         VisitDomainWrapper activeVisit = adtService.getActiveVisit(patient, visitLocation);
 
-        List<Encounter> existingEncounters = new ArrayList<Encounter>();
-        if (activeVisit != null) {
-            for (Encounter encounter : activeVisit.getVisit().getEncounters()) {
-                if (!encounter.isVoided() && dispensingForm.equals(encounter.getForm())) {
-                    existingEncounters.add(encounter);
-                }
+        //get all dispensing encounters
+        List<DispensedMedication> dispensedMedicationList = dispensingService.getDispensedMedication(patient, null, null, null, null, null);
+        if (dispensedMedicationList != null && dispensedMedicationList.size() > 0 ){
+            for (DispensedMedication dispensedMedication : dispensedMedicationList) {
+                log.error("drugName: " + dispensedMedication.getDrug().getDisplayName());
+                log.error("dose: " + dispensedMedication.getMedicationDose().getDose().toString() + " " + dispensedMedication.getMedicationDose().getUnits());
+                log.error("frequency: " + dispensedMedication.getPrescribedFrequency());
+                log.error("duration: " + dispensedMedication.getMedicationDuration().getDuration().toString() + " " + dispensedMedication.getMedicationDuration().getTimeUnits());
+                log.error("quantity dispensed: " + dispensedMedication.getQuantityDispensed().toString());
             }
         }
-        //get all dispensing encounters
-        /*
-        List<DispensedMedication> dispensedMedicationList = dispensingService.getDispensedMedication(patient, null, null, null, null, null);
-        for (DispensedMedication dispensedMedication : dispensedMedicationList) {
-            log.error("drugName= " + dispensedMedication.getDrug().getDisplayName());
-        }
-        */
+        model.addAttribute("dispensedMedicationList", dispensedMedicationList);
 
         model.addAttribute("visit", activeVisit != null ? activeVisit.getVisit() : null);
-        model.addAttribute("existingEncounters", existingEncounters);
         model.addAttribute("patient", patientDomainWrapper);
         model.addAttribute("breadcrumbOverride", ui.toJson(Arrays.asList(appHomepageBreadcrumb, patientPageBreadcrumb)));
 
