@@ -19,7 +19,6 @@ import org.openmrs.ui.framework.annotation.SpringBean;
 import org.openmrs.ui.framework.page.PageModel;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -49,19 +48,8 @@ public class PatientPageController {
 
         //get all dispensing encounters
         List<DispensedMedication> dispensedMedicationList = dispensingService.getDispensedMedication(patient, null, null, null, null, null);
-        if (dispensedMedicationList != null && dispensedMedicationList.size() > 0 ){
-            for (DispensedMedication dispensedMedication : dispensedMedicationList) {
-                log.error("drugName: " + dispensedMedication.getDrug().getDisplayName());
-                log.error("dose: " + dispensedMedication.getMedicationDose().getDose().toString() + " " + dispensedMedication.getMedicationDose().getUnits());
-                log.error("frequency: " + dispensedMedication.getPrescribedFrequency());
-                log.error("duration: " + dispensedMedication.getMedicationDuration().getDuration().toString() + " " + dispensedMedication.getMedicationDuration().getTimeUnits());
-                log.error("quantity dispensed: " + dispensedMedication.getQuantityDispensed().toString());
-            }
-        }else{
-            dispensedMedicationList = new ArrayList<DispensedMedication>();
-        }
-        model.addAttribute("dispensedMedicationList", dispensedMedicationList);
 
+        model.addAttribute("dispensedMedicationList", dispensedMedicationList != null ? dispensedMedicationList : null);
         model.addAttribute("visit", activeVisit != null ? activeVisit.getVisit() : null);
         model.addAttribute("patient", patientDomainWrapper);
         model.addAttribute("breadcrumbOverride", ui.toJson(Arrays.asList(appHomepageBreadcrumb, patientPageBreadcrumb)));

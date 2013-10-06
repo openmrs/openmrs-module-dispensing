@@ -10,7 +10,7 @@
         { label: "${ ui.format(patient.patient.familyName) }, ${ ui.format(patient.patient.givenName) }" , link: '${ui.pageLink("coreapps", "patientdashboard/patientDashboard", [patientId: patient.id])}'},
     ];
 
-    var medicationListSize = "${ dispensedMedicationList.size() }";
+    var medicationListSize = "${ dispensedMedicationList != null ? dispensedMedicationList.size() : 0 }";
 </script>
 
 ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ]) }
@@ -81,7 +81,8 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
             </tr>
             </thead>
             <tbody>
-            <% if (dispensedMedicationList.size() == 0) { %>
+            <% if ( (dispensedMedicationList == null)
+                    || (dispensedMedicationList!= null && dispensedMedicationList.size() == 0)) { %>
             <tr>
                 <td colspan="5">${ ui.message("coreapps.none") }</td>
             </tr>
