@@ -88,7 +88,7 @@
                 </td>
                 <td>
                     <label><uimessage code="emr.patientDashBoard.date"/></label>
-                    <span><encounterDate id="encounterDate" complexExpression="$ui.format($fn.startOfDay($visit.stopDatetime))"/></span>
+                    <span><encounterDate id="encounterDate" complexExpression="$ui.format($fn.startOfDay($visit.startDatetime))"/></span>
                 </td>
             </includeIf>
 
@@ -108,7 +108,7 @@
                 </td>
                 <td>
                     <label><uimessage code="emr.patientDashBoard.date"/></label>
-                    <span><encounterDate id="encounterDate" complexExpression="$ui.format($fn.startOfDay($visit.stopDatetime))"/></span>
+                    <span><encounterDate id="encounterDate" complexExpression="$ui.format($fn.startOfDay($visit.startDatetime))"/></span>
                 </td>
             </includeIf>
         </tr>
