@@ -18,8 +18,16 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
 <script type="text/javascript">
     jq(function() {
 
-        if (parseInt (medicationListSize, 10) > 0 ){
-            jq("#medicationTable").dataTable({});
+        if (parseInt (medicationListSize, 10) > 0 ) {
+            jq("#medicationTable").dataTable({
+                bFilter: false,
+                bJQueryUI: true,
+                bLengthChange: false,
+                iDisplayLength: 10,
+                sPaginationType: "full_numbers",
+                bSort: false,
+                sDom: 't<"fg-toolbar ui-toolbar ui-corner-bl ui-corner-br ui-helper-clearfix datatables-info-and-pg"ip>'
+            });
         }
         jq('#actions .cancel').click(function() {
             emr.navigateTo({
@@ -51,11 +59,11 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
 
 <% if (emrContext.activeVisit) { %>
 
-<div class="container half-width">
+<div class="container">
 
     <h1>${ ui.message("coreapps.vitals.confirmPatientQuestion") }</h1>
 
-    <div id="actions">
+    <div id="actions" class="half-width">
         <button class="confirm big right">
             <i class="icon-arrow-right"></i>
             ${ ui.message("dispensing.findpatient.confirm.yes") }
