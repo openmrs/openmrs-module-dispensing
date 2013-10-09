@@ -92,7 +92,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
             <% if ( (dispensedMedicationList == null)
                     || (dispensedMedicationList!= null && dispensedMedicationList.size() == 0)) { %>
             <tr>
-                <td colspan="5">${ ui.message("coreapps.none") }</td>
+                <td colspan="6">${ ui.message("coreapps.none") }</td>
             </tr>
             <% } %>
             <% dispensedMedicationList.each { medication ->
