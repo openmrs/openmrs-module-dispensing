@@ -120,6 +120,15 @@
             </includeIf>
         </tr>
     </table>
+    <div id="typePrescription">
+        <p >
+            <label>
+                <uimessage code="typeOfPrescription"/>
+            </label>
+            <obs id="Timing of hospital prescription" class="select-arrow" conceptId="PIH:9292"/>
+            <span> <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/></span>
+        </p>
+   </div>
 
     <repeat with="['1'],['2'],['3'],['4'],['5']">
         <obsgroup groupingConceptId="PIH:9070">
