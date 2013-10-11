@@ -123,10 +123,15 @@
     <div id="typePrescription">
         <p >
             <label>
-                <uimessage code="typeOfPrescription"/>
+                <uimessage code="dispensing.medication.typeOfPrescription"/>
             </label>
             <obs id="Timing of hospital prescription" class="select-arrow" conceptId="PIH:9292"/>
-            <span> <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/></span>
+            <span> 
+                <label>
+                    <uimessage code="dispensing.medication.locationOfPrescription"/>
+                </label>
+                <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/>
+            </span>
         </p>
    </div>
 
