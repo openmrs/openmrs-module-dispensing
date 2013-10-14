@@ -2,8 +2,8 @@ package org.openmrs.module.dispensing;
 
 import org.openmrs.Drug;
 import org.openmrs.Obs;
-
 import java.util.Date;
+import java.util.List;
 
 public class DispensedMedication {
 
@@ -13,13 +13,13 @@ public class DispensedMedication {
     String prescribedFrequency;
     Integer quantityDispensed;
     MedicationDuration medicationDuration;
-
+    List<DispensedMedicationObs> additionalObs;
     Obs existingObs;
 
     public DispensedMedication() {
     }
 
-    public DispensedMedication(Date dispensedDateTime, Drug drug, Obs existingObs, MedicationDose medicationDose, MedicationDuration medicationDuration, String prescribedFrequency, Integer quantityDispensed) {
+    public DispensedMedication(Date dispensedDateTime, Drug drug, Obs existingObs, MedicationDose medicationDose, MedicationDuration medicationDuration, String prescribedFrequency, Integer quantityDispensed, List<DispensedMedicationObs> additonalObs) {
         this.dispensedDateTime = dispensedDateTime;
         this.drug = drug;
         this.existingObs = existingObs;
@@ -27,6 +27,9 @@ public class DispensedMedication {
         this.medicationDuration = medicationDuration;
         this.prescribedFrequency = prescribedFrequency;
         this.quantityDispensed = quantityDispensed;
+        this.additionalObs = additonalObs;
+
+
     }
 
     public Drug getDrug() {
@@ -83,5 +86,13 @@ public class DispensedMedication {
 
     public void setDispensedDateTime(Date dispensedDateTime) {
         this.dispensedDateTime = dispensedDateTime;
+    }
+
+    public List<DispensedMedicationObs> getAdditionalObs() {
+        return additionalObs;
+    }
+
+    public void setAdditionalObs(List<DispensedMedicationObs> additionalObs) {
+        this.additionalObs = additionalObs;
     }
 }
