@@ -130,7 +130,8 @@
                 <label>
                     <uimessage code="dispensing.medication.locationOfPrescription"/>
                 </label>
-                <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/>
+
+                <obs id="Discharge location" style="location" conceptId="PIH:9293" />
             </span>
         </p>
    </div>
