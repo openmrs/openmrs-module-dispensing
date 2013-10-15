@@ -5,12 +5,13 @@ import org.openmrs.Concept;
 import org.openmrs.Drug;
 import org.openmrs.Obs;
 import org.openmrs.api.ConceptService;
-import org.openmrs.module.dispensing.DispensedMedication;
-import org.openmrs.module.dispensing.DispensingApiConstants;
-import org.openmrs.module.dispensing.MedicationDose;
-import org.openmrs.module.dispensing.MedicationDuration;
+import org.openmrs.module.dispensing.*;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptor;
+import org.openmrs.module.emrapi.encounter.domain.EncounterTransaction;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
 
@@ -166,8 +167,36 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
                 dispensedMedication.setQuantityDispensed(new Integer(valueNumeric.intValue()));
             }
         }
-        return dispensedMedication;
 
+        List<Obs> additionalObs = getAdditionalObs(obsGroup);
+        List<DispensedMedicationObs> DispensedMedicationAdditionalObs = new ArrayList<DispensedMedicationObs>();
+
+        for(Obs observation : additionalObs){
+            DispensedMedicationObs dispensedMedicationObs = new DispensedMedicationObs();
+            dispensedMedicationObs.setLabel(observation.getValueText());
+            DispensedMedicationAdditionalObs.add(dispensedMedicationObs);
+        }
+        dispensedMedication.setAdditionalObs(DispensedMedicationAdditionalObs);
+
+            return dispensedMedication;
+    }
+    public List<Obs> getAdditionalObs(Obs obsGroup) {
+        List<Obs> additionalObs = new ArrayList<Obs>();
+        if (obsGroup.hasGroupMembers()) {
+            for (Obs observation : obsGroup.getGroupMembers()) {
+                if (!observation.getConcept().equals(dispensingSetConcept) &&
+                        !observation.getConcept().equals(medicationOrdersConcept) &&
+                        !observation.getConcept().equals(quantityOfMedicationDispensedConcept) &&
+                        !observation.getConcept().equals(generalDrugFrequencyConcept) &&
+                        !observation.getConcept().equals(quantityOfMedicationPrescribedPerDoseConcept) &&
+                        !observation.getConcept().equals(unitsOfMedicationPrescribedPerDoseConcept) &&
+                        !observation.getConcept().equals(medicationDurationConcept) &&
+                        !observation.getConcept().equals(timeUnitsConcept)) {
+                    additionalObs.add(observation);
+                }
+            }
+        }
+        return additionalObs;
     }
 
 }
