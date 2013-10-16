@@ -19,7 +19,7 @@ public class DispensedMedication {
     public DispensedMedication() {
     }
 
-    public DispensedMedication(Date dispensedDateTime, Drug drug, Obs existingObs, MedicationDose medicationDose, MedicationDuration medicationDuration, String prescribedFrequency, Integer quantityDispensed, List<DispensedMedicationObs> additonalObs) {
+    public DispensedMedication(Date dispensedDateTime, Drug drug, Obs existingObs, MedicationDose medicationDose, MedicationDuration medicationDuration, String prescribedFrequency, Integer quantityDispensed, List<DispensedMedicationObs> additionalObs) {
         this.dispensedDateTime = dispensedDateTime;
         this.drug = drug;
         this.existingObs = existingObs;
@@ -27,7 +27,7 @@ public class DispensedMedication {
         this.medicationDuration = medicationDuration;
         this.prescribedFrequency = prescribedFrequency;
         this.quantityDispensed = quantityDispensed;
-        this.additionalObs = additonalObs;
+        this.additionalObs = additionalObs;
 
 
     }

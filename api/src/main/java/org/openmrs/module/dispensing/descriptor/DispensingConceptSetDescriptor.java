@@ -8,7 +8,6 @@ import org.openmrs.api.ConceptService;
 import org.openmrs.module.dispensing.*;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptor;
-import org.openmrs.module.emrapi.encounter.domain.EncounterTransaction;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -171,9 +170,19 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         List<Obs> additionalObs = getAdditionalObs(obsGroup);
         List<DispensedMedicationObs> DispensedMedicationAdditionalObs = new ArrayList<DispensedMedicationObs>();
 
-        for(Obs observation : additionalObs){
+        Obs observation ;
+        for(int i=0; i< additionalObs.size(); i ++){
+            observation = additionalObs.get(i);
             DispensedMedicationObs dispensedMedicationObs = new DispensedMedicationObs();
+
+            if(observation.getConcept().getDatatype().isText()){
             dispensedMedicationObs.setLabel(observation.getValueText());
+            }
+
+            if(observation.getConcept().getDatatype().isCoded()){
+                dispensedMedicationObs.setLabel(observation.getValueCoded().getName().getName());
+            }
+
             DispensedMedicationAdditionalObs.add(dispensedMedicationObs);
         }
         dispensedMedication.setAdditionalObs(DispensedMedicationAdditionalObs);
@@ -192,6 +201,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
                         !observation.getConcept().equals(unitsOfMedicationPrescribedPerDoseConcept) &&
                         !observation.getConcept().equals(medicationDurationConcept) &&
                         !observation.getConcept().equals(timeUnitsConcept)) {
+
                     additionalObs.add(observation);
                 }
             }
