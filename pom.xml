@@ -41,6 +41,9 @@
         <htmlformentryVersion>2.3-SNAPSHOT</htmlformentryVersion>
         <htmlformentryuiVersion>1.0</htmlformentryuiVersion>
         <providermanagementModuleVersion>2.1</providermanagementModuleVersion>
+
+        <superCsvVersion>2.1.0</superCsvVersion>
+
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
 
@@ -263,6 +266,14 @@
             <groupId>org.openmrs.module</groupId>
             <artifactId>providermanagement-api</artifactId>
         </dependency>
+
+        <!-- other dependencies -->
+        <dependency>
+            <groupId>net.sf.supercsv</groupId>
+            <artifactId>super-csv</artifactId>
+            <version>${superCsvVersion}</version>
+        </dependency>
+
     </dependencies>
 
 	<build>
