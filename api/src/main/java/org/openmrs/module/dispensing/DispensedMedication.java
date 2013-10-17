@@ -13,13 +13,14 @@ public class DispensedMedication {
     String prescribedFrequency;
     Integer quantityDispensed;
     MedicationDuration medicationDuration;
-    List<DispensedMedicationObs> additionalObs;
+    String timingOfHospitalPrescription;
+    String dischargeLocation;
     Obs existingObs;
 
     public DispensedMedication() {
     }
 
-    public DispensedMedication(Date dispensedDateTime, Drug drug, Obs existingObs, MedicationDose medicationDose, MedicationDuration medicationDuration, String prescribedFrequency, Integer quantityDispensed, List<DispensedMedicationObs> additionalObs) {
+    public DispensedMedication(Date dispensedDateTime, Drug drug, Obs existingObs, MedicationDose medicationDose, MedicationDuration medicationDuration, String prescribedFrequency, Integer quantityDispensed, String timingOfHospitalPrescription, String dischargeLocation) {
         this.dispensedDateTime = dispensedDateTime;
         this.drug = drug;
         this.existingObs = existingObs;
@@ -27,7 +28,8 @@ public class DispensedMedication {
         this.medicationDuration = medicationDuration;
         this.prescribedFrequency = prescribedFrequency;
         this.quantityDispensed = quantityDispensed;
-        this.additionalObs = additionalObs;
+        this.timingOfHospitalPrescription = timingOfHospitalPrescription;
+        this.dischargeLocation = dischargeLocation;
 
 
     }
@@ -88,11 +90,19 @@ public class DispensedMedication {
         this.dispensedDateTime = dispensedDateTime;
     }
 
-    public List<DispensedMedicationObs> getAdditionalObs() {
-        return additionalObs;
+    public String getTimingOfHospitalPrescription() {
+        return timingOfHospitalPrescription;
     }
 
-    public void setAdditionalObs(List<DispensedMedicationObs> additionalObs) {
-        this.additionalObs = additionalObs;
+    public void setTimingOfHospitalPrescription(String timingOfHospitalPrescription) {
+        this.timingOfHospitalPrescription = timingOfHospitalPrescription;
+    }
+
+    public String getDischargeLocation() {
+        return dischargeLocation;
+    }
+
+    public void setDischargeLocation(String dischargeLocation) {
+        this.dischargeLocation = dischargeLocation;
     }
 }
