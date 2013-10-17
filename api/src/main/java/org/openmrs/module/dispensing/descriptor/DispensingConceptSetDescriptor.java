@@ -8,6 +8,7 @@ import org.openmrs.api.ConceptService;
 import org.openmrs.module.dispensing.*;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptor;
+import org.openmrs.module.htmlformentry.schema.ObsGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +23,8 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
     private Concept unitsOfMedicationPrescribedPerDoseConcept;
     private Concept medicationDurationConcept;
     private Concept timeUnitsConcept;
+    private Concept timingOfHospitalPrescriptionConcept;
+    private Concept dischargeLocationConcept;
 
     public DispensingConceptSetDescriptor(ConceptService conceptService) {
         setup(conceptService, EmrApiConstants.EMR_CONCEPT_SOURCE_NAME,
@@ -32,7 +35,9 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
                 "quantityOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_PRESCRIBED_PER_DOSE,
                 "unitsOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_UNITS_OF_MEDICATION_PRESCRIBED_PER_DOSE,
                 "medicationDurationConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_DURATION,
-                "timeUnitsConcept", DispensingApiConstants.CONCEPT_CODE_TIME_UNITS);
+                "timeUnitsConcept", DispensingApiConstants.CONCEPT_CODE_TIME_UNITS,
+                "timingOfHospitalPrescriptionConcept", DispensingApiConstants.CONCEPT_CODE_HOSPITAL_PRESCRIPTION_TIMING,
+                "dischargeLocationConcept", DispensingApiConstants.CONCEPT_CODE_DISCHARGE_LOCATION);
     }
 
     public DispensingConceptSetDescriptor() {
@@ -102,6 +107,22 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         this.unitsOfMedicationPrescribedPerDoseConcept = unitsOfMedicationPrescribedPerDoseConcept;
     }
 
+    public Concept getTimingOfHospitalPrescriptionConcept() {
+        return timingOfHospitalPrescriptionConcept;
+    }
+
+    public void setTimingOfHospitalPrescriptionConcept(Concept timingOfHospitalPrescriptionConcept) {
+        this.timingOfHospitalPrescriptionConcept = timingOfHospitalPrescriptionConcept;
+    }
+
+    public Concept getDischargeLocationConcept() {
+        return dischargeLocationConcept;
+    }
+
+    public void setDischargeLocationConcept(Concept dischargeLocation) {
+        this.dischargeLocationConcept = dischargeLocation;
+    }
+
     public boolean isDispensedMedication(Obs obsGroup){
         return (obsGroup != null) ? obsGroup.getConcept().equals(dispensingSetConcept) : false;
     }
@@ -167,46 +188,21 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
             }
         }
 
-        List<Obs> additionalObs = getAdditionalObs(obsGroup);
-        List<DispensedMedicationObs> DispensedMedicationAdditionalObs = new ArrayList<DispensedMedicationObs>();
-
-        Obs observation ;
-        for(int i=0; i< additionalObs.size(); i ++){
-            observation = additionalObs.get(i);
-            DispensedMedicationObs dispensedMedicationObs = new DispensedMedicationObs();
-
-            if(observation.getConcept().getDatatype().isText()){
-            dispensedMedicationObs.setLabel(observation.getValueText());
-            }
-
-            if(observation.getConcept().getDatatype().isCoded()){
-                dispensedMedicationObs.setLabel(observation.getValueCoded().getName().getName());
-            }
-
-            DispensedMedicationAdditionalObs.add(dispensedMedicationObs);
+        obs = findMember(obsGroup, timingOfHospitalPrescriptionConcept);
+        String timingOfHospitalPrescription;
+        if(obs !=null){
+            timingOfHospitalPrescription = obs.getValueCoded().getName().getName();
+            dispensedMedication.setTimingOfHospitalPrescription(timingOfHospitalPrescription);
         }
-        dispensedMedication.setAdditionalObs(DispensedMedicationAdditionalObs);
+
+        obs = findMember(obsGroup, dischargeLocationConcept);
+        String dischargeLocation = null;
+        if(obs != null){
+            dischargeLocation  = obs.getValueText();
+            dispensedMedication.setDischargeLocation(dischargeLocation);
+        }
 
             return dispensedMedication;
-    }
-    public List<Obs> getAdditionalObs(Obs obsGroup) {
-        List<Obs> additionalObs = new ArrayList<Obs>();
-        if (obsGroup.hasGroupMembers()) {
-            for (Obs observation : obsGroup.getGroupMembers()) {
-                if (!observation.getConcept().equals(dispensingSetConcept) &&
-                        !observation.getConcept().equals(medicationOrdersConcept) &&
-                        !observation.getConcept().equals(quantityOfMedicationDispensedConcept) &&
-                        !observation.getConcept().equals(generalDrugFrequencyConcept) &&
-                        !observation.getConcept().equals(quantityOfMedicationPrescribedPerDoseConcept) &&
-                        !observation.getConcept().equals(unitsOfMedicationPrescribedPerDoseConcept) &&
-                        !observation.getConcept().equals(medicationDurationConcept) &&
-                        !observation.getConcept().equals(timeUnitsConcept)) {
-
-                    additionalObs.add(observation);
-                }
-            }
-        }
-        return additionalObs;
     }
 
 }
