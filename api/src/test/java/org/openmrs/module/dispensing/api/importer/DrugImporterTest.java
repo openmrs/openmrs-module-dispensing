@@ -171,13 +171,13 @@ public class DrugImporterTest {
     @Test
     public void drugListShouldFailValidationIfDuplicateOpenBoxesCode() throws IOException {
 
-        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("drug-list-test-duplicate-openboxes-code.csv");
+        InputStream inputStream = getClass().getClassLoader().getResourceAsStream("drug-list-test-duplicate-inventory-code.csv");
         InputStreamReader reader = new InputStreamReader(inputStream);
 
         ImportNotes notes = drugImporter.verifySpreadsheet(reader);
         assertTrue(notes.hasErrors());
         assertThat(notes.getErrors().size(), is(1));
-        assertThat(notes.getErrors().get(0), containsString("Duplicate OpenBoxes Code"));
+        assertThat(notes.getErrors().get(0), containsString("Duplicate Inventory Code"));
 
     }
 

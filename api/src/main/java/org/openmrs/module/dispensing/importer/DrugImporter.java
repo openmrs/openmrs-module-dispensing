@@ -65,10 +65,11 @@ public class DrugImporter {
 
         for (DrugImporterRow row : drugList) {
 
-            if (openBoxesCodes.contains(row.getOpenBoxesCode())) {
-                notes.addError("Duplicate OpenBoxes Code: " + row.getOpenBoxesCode());
+            // note that we currently don't store the inventory code anywhere!
+            if (openBoxesCodes.contains(row.getInventoryCode())) {
+                notes.addError("Duplicate Inventory Code: " + row.getInventoryCode());
             }
-            openBoxesCodes.add(row.getOpenBoxesCode());
+            openBoxesCodes.add(row.getInventoryCode());
 
             if (productNames.contains(row.getProductName())) {
                 notes.addError("Duplicate Product Name: " + row.getProductName());
@@ -170,6 +171,8 @@ public class DrugImporter {
                     }
                 }
                 drug.setConcept(concept);
+
+                // note that we currently don't store the inventory code anywhere!
 
                 conceptService.saveDrug(drug);
             }

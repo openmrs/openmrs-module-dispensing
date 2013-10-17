@@ -2,13 +2,13 @@ package org.openmrs.module.dispensing.importer;
 
 public class DrugImporterRow {
 
-    // OpenBoxes code currently not used
+    // Inventory code currently not used
 
-    public static final String[] FIELD_COLUMNS = { "uuid", "openBoxesCode", "productName", "concept" };
+    public static final String[] FIELD_COLUMNS = { "uuid", "inventoryCode", "productName", "concept" };
 
     private String uuid;
 
-    private String openBoxesCode;
+    private String inventoryCode;
 
     private String productName;
 
@@ -22,12 +22,12 @@ public class DrugImporterRow {
         this.uuid = uuid;
     }
 
-    public String getOpenBoxesCode() {
-        return openBoxesCode;
+    public String getInventoryCode() {
+        return inventoryCode;
     }
 
-    public void setOpenBoxesCode(String openBoxesCode) {
-        this.openBoxesCode = openBoxesCode;
+    public void setInventoryCode(String inventoryCode) {
+        this.inventoryCode = inventoryCode;
     }
 
     public String getProductName() {
