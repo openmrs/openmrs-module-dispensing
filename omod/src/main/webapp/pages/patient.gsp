@@ -107,18 +107,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
                 <td>${ ui.format(medication.prescribedFrequency) }</td>
                 <td>${ ui.format(medication.medicationDuration.duration) + " " + medication.medicationDuration.timeUnits }</td>
                 <td>${ ui.format(medication.quantityDispensed) }</td>
-                <td>
-                <% if ( medication.additionalObs!= null && medication.additionalObs.size() > 0) { %>
-
-                    <% if ( medication.additionalObs.get(0).getLabel() !=null) { %>
-                     ${ ui.format(medication.additionalObs.get(0).getLabel()) }
-                    <% } %>
-                                -
-                    <% if ( medication.additionalObs.get(1).getLabel() !=null) { %>
-                    ${ ui.format(medication.additionalObs.get(1).getLabel()) }
-                     <% } %>
-                <% } %>
-                </td>
+                <td>${ ui.format(medication.timingOfHospitalPrescription)  + " " + medication.dischargeLocation}  </td>
             </tr>
             <% } %>
             </tbody>
