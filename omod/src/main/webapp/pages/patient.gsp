@@ -26,6 +26,16 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
                 iDisplayLength: 10,
                 sPaginationType: "full_numbers",
                 bSort: false,
+                bAutoWidth: false,
+                aoColumns: [
+                    {"sWidth": "13%"},
+                    {"sWidth": "20%"},
+                    {"sWidth": "7%"},
+                    {"sWidth": "12%"},
+                    {"sWidth": "10%"},
+                    {"sWidth": "12%"},
+                    {"sWidth": "26%"}
+                ],
                 sDom: 't<"fg-toolbar ui-toolbar ui-corner-bl ui-corner-br ui-helper-clearfix datatables-info-and-pg"ip>'
             });
         }
@@ -94,7 +104,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
             <% if ( (dispensedMedicationList == null)
                     || (dispensedMedicationList!= null && dispensedMedicationList.size() == 0)) { %>
             <tr>
-                <td colspan="6">${ ui.message("coreapps.none") }</td>
+                <td colspan="7">${ ui.message("coreapps.none") }</td>
             </tr>
             <% } %>
             <% dispensedMedicationList.each { medication ->
