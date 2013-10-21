@@ -6,12 +6,12 @@ import org.openmrs.Drug;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.ConceptService;
-import org.openmrs.module.dispensing.*;
-import org.openmrs.module.emrapi.*;
+import org.openmrs.module.dispensing.DispensedMedication;
+import org.openmrs.module.dispensing.DispensingApiConstants;
+import org.openmrs.module.dispensing.MedicationDose;
+import org.openmrs.module.dispensing.MedicationDuration;
+import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptor;
-
-import java.util.ArrayList;
-import java.util.List;
 
 public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
 
@@ -36,6 +36,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
                 "unitsOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_UNITS_OF_MEDICATION_PRESCRIBED_PER_DOSE,
                 "medicationDurationConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_DURATION,
                 "timeUnitsConcept", DispensingApiConstants.CONCEPT_CODE_TIME_UNITS,
+                // note that these last two concepts are technically part of the set, but included as top-level obs on the encounter (see toDispensedMedcation method)
                 "timingOfHospitalPrescriptionConcept", DispensingApiConstants.CONCEPT_CODE_HOSPITAL_PRESCRIPTION_TIMING,
                 "dischargeLocationConcept", DispensingApiConstants.CONCEPT_CODE_DISCHARGE_LOCATION);
     }
