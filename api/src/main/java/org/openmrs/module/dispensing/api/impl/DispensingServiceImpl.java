@@ -20,6 +20,7 @@ import org.openmrs.Obs;
 import org.openmrs.Patient;
 import org.openmrs.Person;
 import org.openmrs.api.ConceptService;
+import org.openmrs.api.LocationService;
 import org.openmrs.api.ObsService;
 import org.openmrs.api.impl.BaseOpenmrsService;
 import org.openmrs.module.dispensing.DispensedMedication;
@@ -46,6 +47,7 @@ public class DispensingServiceImpl extends BaseOpenmrsService implements Dispens
     private EmrApiProperties emrApiProperties;
     private ObsService obsService;
     private ConceptService conceptService;
+    private LocationService locationService;
 	
 	/**
      * @param dao the dao to set
@@ -74,7 +76,7 @@ public class DispensingServiceImpl extends BaseOpenmrsService implements Dispens
     @Override
     public List<DispensedMedication> getDispensedMedication(Patient patient, List<Location> locations, Date fromDate, Date toDate, Integer index, Integer count) {
         List<DispensedMedication> dispensedMedications = null;
-        DispensingConceptSetDescriptor dispensingConceptSetDescriptor = new DispensingConceptSetDescriptor(conceptService);
+        DispensingConceptSetDescriptor dispensingConceptSetDescriptor = new DispensingConceptSetDescriptor(conceptService, locationService);
         List<Obs> observations = obsService.getObservations(Arrays.asList((Person) patient)
                 , null
                 , Arrays.asList(dispensingConceptSetDescriptor.getDispensingSetConcept())
