@@ -2,6 +2,7 @@ package org.openmrs.module.dispensing;
 
 import org.openmrs.Drug;
 import org.openmrs.Obs;
+import org.openmrs.Location;
 import java.util.Date;
 import java.util.List;
 
@@ -14,13 +15,13 @@ public class DispensedMedication {
     Integer quantityDispensed;
     MedicationDuration medicationDuration;
     String timingOfHospitalPrescription;
-    String dischargeLocation;
+    Location dischargeLocation;
     Obs existingObs;
 
     public DispensedMedication() {
     }
 
-    public DispensedMedication(Date dispensedDateTime, Drug drug, Obs existingObs, MedicationDose medicationDose, MedicationDuration medicationDuration, String prescribedFrequency, Integer quantityDispensed, String timingOfHospitalPrescription, String dischargeLocation) {
+    public DispensedMedication(Date dispensedDateTime, Drug drug, Obs existingObs, MedicationDose medicationDose, MedicationDuration medicationDuration, String prescribedFrequency, Integer quantityDispensed, String timingOfHospitalPrescription, Location dischargeLocation) {
         this.dispensedDateTime = dispensedDateTime;
         this.drug = drug;
         this.existingObs = existingObs;
@@ -98,11 +99,11 @@ public class DispensedMedication {
         this.timingOfHospitalPrescription = timingOfHospitalPrescription;
     }
 
-    public String getDischargeLocation() {
+    public Location getDischargeLocation() {
         return dischargeLocation;
     }
 
-    public void setDischargeLocation(String dischargeLocation) {
+    public void setDischargeLocation(Location dischargeLocation) {
         this.dischargeLocation = dischargeLocation;
     }
 }
