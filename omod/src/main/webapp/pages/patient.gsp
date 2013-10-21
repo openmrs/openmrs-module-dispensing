@@ -107,7 +107,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
                 <td>${ ui.format(medication.prescribedFrequency) }</td>
                 <td>${ ui.format(medication.medicationDuration.duration) + " " + medication.medicationDuration.timeUnits }</td>
                 <td>${ ui.format(medication.quantityDispensed) }</td>
-                <td>${ ui.format(medication.timingOfHospitalPrescription)  + " " + medication.dischargeLocation}  </td>
+                <td>${ ui.format(medication.timingOfHospitalPrescription)  + " - " + medication.dischargeLocation}  </td>
             </tr>
             <% } %>
             </tbody>
