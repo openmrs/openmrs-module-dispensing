@@ -33,6 +33,7 @@
                 <property name="emrApiProperties" ref="emrApiProperties"/>
                 <property name="obsService" ref="obsService"/>
                 <property name="conceptService" ref="conceptService"/>
+                <property name="locationService" ref="locationService"/>
             </bean>
         </property>
         <property name="preInterceptors">
