@@ -48,7 +48,6 @@ public class DispensingServiceImpl extends BaseOpenmrsService implements Dispens
     private ObsService obsService;
     private ConceptService conceptService;
     private LocationService locationService;
-	
 	/**
      * @param dao the dao to set
      */
@@ -66,6 +65,14 @@ public class DispensingServiceImpl extends BaseOpenmrsService implements Dispens
 
     public void setEmrApiProperties(EmrApiProperties emrApiProperties) {
         this.emrApiProperties = emrApiProperties;
+    }
+
+    public LocationService getLocationService() {
+        return locationService;
+    }
+
+    public void setLocationService(LocationService locationService) {
+        this.locationService = locationService;
     }
 
     @Override
@@ -104,7 +111,6 @@ public class DispensingServiceImpl extends BaseOpenmrsService implements Dispens
                 }
             }
         }
-
 
         return dispensedMedications;
     }
