@@ -5,11 +5,13 @@ import org.openmrs.Concept;
 import org.openmrs.Drug;
 import org.openmrs.Encounter;
 import org.openmrs.Obs;
+import org.openmrs.Location;
 import org.openmrs.api.ConceptService;
 import org.openmrs.module.dispensing.DispensedMedication;
 import org.openmrs.module.dispensing.DispensingApiConstants;
 import org.openmrs.module.dispensing.MedicationDose;
 import org.openmrs.module.dispensing.MedicationDuration;
+import org.openmrs.api.LocationService;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptor;
 
@@ -25,9 +27,13 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
     private Concept timeUnitsConcept;
     private Concept timingOfHospitalPrescriptionConcept;
     private Concept dischargeLocationConcept;
+    private LocationService locationService;
 
-    public DispensingConceptSetDescriptor(ConceptService conceptService) {
-        setup(conceptService, EmrApiConstants.EMR_CONCEPT_SOURCE_NAME,
+    public DispensingConceptSetDescriptor(ConceptService conceptService, LocationService locationService) {
+
+        this.locationService = locationService;
+
+        setup(conceptService,  EmrApiConstants.EMR_CONCEPT_SOURCE_NAME,
                 "dispensingSetConcept", DispensingApiConstants.CONCEPT_CODE_DISPENSING_MEDICATION_CONCEPT_SET,
                 "medicationOrdersConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_ORDERS,
                 "quantityOfMedicationDispensedConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_DISPENSED,
@@ -203,7 +209,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
             }
         }
 
-       obs =  findObsatTopLevel (encounter, timingOfHospitalPrescriptionConcept);
+       obs =  findObsatTopLevel(encounter, timingOfHospitalPrescriptionConcept);
         String timingOfHospitalPrescription;
         if(obs !=null){
            timingOfHospitalPrescription = obs.getValueCoded().getName().getName();
@@ -211,9 +217,9 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
        }
 
        obs = findObsatTopLevel(encounter, dischargeLocationConcept);
-       String dischargeLocation;
        if(obs != null){
-            dischargeLocation  = obs.getValueText();
+            int dischargeLocationId  = Integer.valueOf(obs.getValueText());
+            Location dischargeLocation = locationService.getLocation(dischargeLocationId);
             dispensedMedication.setDischargeLocation(dischargeLocation);
         }
             return dispensedMedication;
