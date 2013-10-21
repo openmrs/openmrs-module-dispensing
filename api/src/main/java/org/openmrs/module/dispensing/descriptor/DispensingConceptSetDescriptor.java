@@ -202,20 +202,19 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
             }
         }
 
-        obs = findMember(obsGroup, timingOfHospitalPrescriptionConcept);
+       obs =  findObsatTopLevel (encounter, timingOfHospitalPrescriptionConcept);
         String timingOfHospitalPrescription;
         if(obs !=null){
-            timingOfHospitalPrescription = obs.getValueCoded().getName().getName();
-            dispensedMedication.setTimingOfHospitalPrescription(timingOfHospitalPrescription);
-        }
+           timingOfHospitalPrescription = obs.getValueCoded().getName().getName();
+           dispensedMedication.setTimingOfHospitalPrescription(timingOfHospitalPrescription);
+       }
 
-        obs = findMember(obsGroup, dischargeLocationConcept);
-        String dischargeLocation = null;
-        if(obs != null){
+       obs = findObsatTopLevel(encounter, dischargeLocationConcept);
+       String dischargeLocation;
+       if(obs != null){
             dischargeLocation  = obs.getValueText();
             dispensedMedication.setDischargeLocation(dischargeLocation);
         }
-
             return dispensedMedication;
     }
 
