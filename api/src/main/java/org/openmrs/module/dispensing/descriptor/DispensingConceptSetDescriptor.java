@@ -3,12 +3,12 @@ package org.openmrs.module.dispensing.descriptor;
 import org.apache.commons.lang.StringUtils;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
+import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.api.ConceptService;
 import org.openmrs.module.dispensing.*;
-import org.openmrs.module.emrapi.EmrApiConstants;
+import org.openmrs.module.emrapi.*;
 import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptor;
-import org.openmrs.module.htmlformentry.schema.ObsGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -127,12 +127,26 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         return (obsGroup != null) ? obsGroup.getConcept().equals(dispensingSetConcept) : false;
     }
 
+    public Obs findObsatTopLevel ( Encounter encounter, Concept concept){
+
+
+        for (Obs observation : encounter.getObsAtTopLevel(true)) {
+            if (observation.getConcept().getName() == concept.getName()){
+                   return observation;
+            }
+        }
+
+        return null;
+
+    }
+
     public DispensedMedication toDispensedMedication(Obs obsGroup){
         if (!isDispensedMedication(obsGroup)) {
             throw new IllegalArgumentException("Not an obs group for a dispensed diagnosis" + obsGroup);
         }
         DispensedMedication dispensedMedication = new DispensedMedication();
         dispensedMedication.setDispensedDateTime(obsGroup.getEncounter().getEncounterDatetime());
+        Encounter encounter = obsGroup.getEncounter();
         Obs obs = findMember(obsGroup, medicationOrdersConcept);
         if (obs == null){
             throw new IllegalArgumentException("Obs group does not contain a drug observation: " + obsGroup);
