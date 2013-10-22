@@ -134,17 +134,14 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         return (obsGroup != null) ? obsGroup.getConcept().equals(dispensingSetConcept) : false;
     }
 
-    public Obs findObsatTopLevel ( Encounter encounter, Concept concept){
-
-
+    public Obs findObsatTopLevel ( Obs obsGroup, Concept concept){
+        Encounter encounter  = obsGroup.getEncounter();
         for (Obs observation : encounter.getObsAtTopLevel(true)) {
             if (observation.getConcept().getName() == concept.getName()){
                    return observation;
             }
         }
-
         return null;
-
     }
 
     public DispensedMedication toDispensedMedication(Obs obsGroup){
@@ -153,39 +150,78 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         }
         DispensedMedication dispensedMedication = new DispensedMedication();
         dispensedMedication.setDispensedDateTime(obsGroup.getEncounter().getEncounterDatetime());
-        Encounter encounter = obsGroup.getEncounter();
-        Obs obs = findMember(obsGroup, medicationOrdersConcept);
-        if (obs == null){
-            throw new IllegalArgumentException("Obs group does not contain a drug observation: " + obsGroup);
-        }
-        Drug drug = obs.getValueDrug();
-        if (drug == null ){
-            throw new IllegalArgumentException("Obs group does not contain a drug: " + obs);
-        }
+
+        Drug drug = getDrugToDispensedMedication(obsGroup);
         dispensedMedication.setDrug(drug);
-        obs = findMember(obsGroup, quantityOfMedicationPrescribedPerDoseConcept);
-        Integer dose = null;
+
+        MedicationDose medicationDose = GetMedicationDoseToDispensedMedication(obsGroup);
+        dispensedMedication.setMedicationDose(medicationDose);
+
+        String frequency = getGeneralDrugFrequencyToDispensedMedication(obsGroup, dispensedMedication);
+        dispensedMedication.setPrescribedFrequency(frequency);
+
+        MedicationDuration medicationDuration =  getMedicationDurationToDispensedMedication(obsGroup);
+        dispensedMedication.setMedicationDuration(medicationDuration);
+
+        int quantityOfMedicationDispensed = getQuantityOfMedicationDispensedConceptToDispensedMedication(obsGroup);
+        dispensedMedication.setQuantityDispensed(quantityOfMedicationDispensed);
+
+        String timingOfHospitalPrescription = getTimingOfHospitalPrescriptionToDispensedMedication(obsGroup);
+        dispensedMedication.setTimingOfHospitalPrescription(timingOfHospitalPrescription);
+
+        Location dischargeLocation = getDischargeLocationToDispensedMedication(obsGroup);
+        dispensedMedication.setDischargeLocation(dischargeLocation);
+
+        return dispensedMedication;
+    }
+
+    public Location getDischargeLocationToDispensedMedication(Obs obsGroup) {
+        Obs obs;
+        Location dischargeLocation = null;
+        obs = findObsatTopLevel(obsGroup, dischargeLocationConcept);
+        if (obs != null){
+            int dischargeLocationId  = Integer.valueOf(obs.getValueText());
+            dischargeLocation = locationService.getLocation(dischargeLocationId);
+        }
+        return dischargeLocation;
+    }
+
+    private String getTimingOfHospitalPrescriptionToDispensedMedication(Obs obsGroup) {
+        String timingOfHospitalPrescription = null;
+        Obs obs;
+        obs =  findObsatTopLevel(obsGroup, timingOfHospitalPrescriptionConcept);
+        if (obs !=null){
+            timingOfHospitalPrescription = obs.getValueCoded().getName().getName();
+        }
+        return timingOfHospitalPrescription;
+    }
+
+    private int getQuantityOfMedicationDispensedConceptToDispensedMedication(Obs obsGroup) {
+        Obs obs;
+        int quantitydispensed = 0;
+
+        obs = findMember(obsGroup, quantityOfMedicationDispensedConcept);
         if (obs != null) {
             Double valueNumeric = obs.getValueNumeric();
             if (valueNumeric != null) {
-                dose = new Integer(valueNumeric.intValue());
+                quantitydispensed = new Integer(valueNumeric.intValue());
             }
         }
-        obs = findMember(obsGroup, unitsOfMedicationPrescribedPerDoseConcept);
-        String units = null;
-        if (obs != null){
-            units = obs.getValueText();
-        }
-        if (dose != null && StringUtils.isNotBlank(units)){
-            dispensedMedication.setMedicationDose(new MedicationDose(dose, units));
-        }
+        return  quantitydispensed;
+    }
+
+    private String getGeneralDrugFrequencyToDispensedMedication(Obs obsGroup, DispensedMedication dispensedMedication) {
+        Obs obs;
+        String frequency = "";
         obs = findMember(obsGroup, generalDrugFrequencyConcept);
         if (obs != null){
-            String frequency = obs.getValueText();
-            if (StringUtils.isNotEmpty(frequency)){
-                dispensedMedication.setPrescribedFrequency(frequency);
-            }
+             frequency = obs.getValueText();
         }
+        return frequency;
+    }
+
+    private MedicationDuration getMedicationDurationToDispensedMedication(Obs obsGroup) {
+        Obs obs;
         obs = findMember(obsGroup, medicationDurationConcept);
         Integer duration = null;
         if (obs != null) {
@@ -195,33 +231,53 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
             }
         }
         obs = findMember(obsGroup, timeUnitsConcept);
+        String units = null;
         if (obs != null) {
             units = obs.getValueCoded().getName().getName();
         }
+        MedicationDuration medicationDuration = null;
         if (duration != null && StringUtils.isNotEmpty(units)){
-            dispensedMedication.setMedicationDuration(new MedicationDuration(duration, units));
-        }
-        obs = findMember(obsGroup, quantityOfMedicationDispensedConcept);
-        if (obs != null) {
-            Double valueNumeric = obs.getValueNumeric();
-            if (valueNumeric != null) {
-                dispensedMedication.setQuantityDispensed(new Integer(valueNumeric.intValue()));
-            }
+            medicationDuration = new MedicationDuration(duration, units);
         }
 
-       obs =  findObsatTopLevel(encounter, timingOfHospitalPrescriptionConcept);
-       if (obs !=null){
-           String timingOfHospitalPrescription = obs.getValueCoded().getName().getName();
-           dispensedMedication.setTimingOfHospitalPrescription(timingOfHospitalPrescription);
-       }
-
-       obs = findObsatTopLevel(encounter, dischargeLocationConcept);
-       if (obs != null){
-            int dischargeLocationId  = Integer.valueOf(obs.getValueText());
-            Location dischargeLocation = locationService.getLocation(dischargeLocationId);
-            dispensedMedication.setDischargeLocation(dischargeLocation);
-       }
-            return dispensedMedication;
+        return medicationDuration;
     }
 
+    public Drug getDrugToDispensedMedication(Obs obsGroup) {
+        Obs obs = findMember(obsGroup, medicationOrdersConcept);
+        if (obs == null){
+            throw new IllegalArgumentException("Obs group does not contain a drug observation: " + obsGroup);
+        }
+        Drug drug = obs.getValueDrug();
+        if (drug == null ){
+            throw new IllegalArgumentException("Obs group does not contain a drug: " + obs);
+        }
+        return drug;
+    }
+
+    public MedicationDose GetMedicationDoseToDispensedMedication (Obs obsGroup) {
+            Obs obs;
+            obs = findMember(obsGroup, quantityOfMedicationPrescribedPerDoseConcept);
+            Integer dose = null;
+            if (obs != null) {
+                Double valueNumeric = obs.getValueNumeric();
+                if (valueNumeric != null) {
+                    dose = new Integer(valueNumeric.intValue());
+                }
+            }
+
+            obs = findMember(obsGroup, unitsOfMedicationPrescribedPerDoseConcept);
+            String units = null;
+            if (obs != null){
+                units = obs.getValueText();
+            }
+
+            MedicationDose medicationDose = null;
+
+            if (dose != null && StringUtils.isNotBlank(units)){
+                 medicationDose = new MedicationDose(dose, units);
+
+            }
+            return medicationDose;
+    }
 }
