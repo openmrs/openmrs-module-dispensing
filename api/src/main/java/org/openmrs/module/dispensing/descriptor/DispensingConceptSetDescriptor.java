@@ -25,8 +25,11 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
     private Concept unitsOfMedicationPrescribedPerDoseConcept;
     private Concept medicationDurationConcept;
     private Concept timeUnitsConcept;
+
+    // note that these last two concepts aren't part of the set, but included as top-level obs on the encounter (see toDispensedMedcation method)
     private Concept timingOfHospitalPrescriptionConcept;
     private Concept dischargeLocationConcept;
+
     private LocationService locationService;
 
     public DispensingConceptSetDescriptor(ConceptService conceptService, LocationService locationService) {
@@ -41,10 +44,25 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
                 "quantityOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_PRESCRIBED_PER_DOSE,
                 "unitsOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_UNITS_OF_MEDICATION_PRESCRIBED_PER_DOSE,
                 "medicationDurationConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_DURATION,
-                "timeUnitsConcept", DispensingApiConstants.CONCEPT_CODE_TIME_UNITS,
-                // note that these last two concepts are technically part of the set, but included as top-level obs on the encounter (see toDispensedMedcation method)
-                "timingOfHospitalPrescriptionConcept", DispensingApiConstants.CONCEPT_CODE_HOSPITAL_PRESCRIPTION_TIMING,
-                "dischargeLocationConcept", DispensingApiConstants.CONCEPT_CODE_DISCHARGE_LOCATION);
+                "timeUnitsConcept", DispensingApiConstants.CONCEPT_CODE_TIME_UNITS
+        );
+
+        timingOfHospitalPrescriptionConcept = conceptService.getConceptByMapping(DispensingApiConstants.CONCEPT_CODE_HOSPITAL_PRESCRIPTION_TIMING,
+                EmrApiConstants.EMR_CONCEPT_SOURCE_NAME);
+
+        if (timingOfHospitalPrescriptionConcept == null) {
+            throw new IllegalStateException("Couldn't find concept for timing of prescription which should be mapped as " + EmrApiConstants.EMR_CONCEPT_SOURCE_NAME
+                    + ":" + DispensingApiConstants.CONCEPT_CODE_HOSPITAL_PRESCRIPTION_TIMING);
+        }
+
+        dischargeLocationConcept = conceptService.getConceptByMapping(DispensingApiConstants.CONCEPT_CODE_DISCHARGE_LOCATION,
+                EmrApiConstants.EMR_CONCEPT_SOURCE_NAME);
+
+        if (timingOfHospitalPrescriptionConcept == null) {
+            throw new IllegalStateException("Couldn't find concept for discharge location which should be mapped as " + EmrApiConstants.EMR_CONCEPT_SOURCE_NAME
+                    + ":" + DispensingApiConstants.CONCEPT_CODE_DISCHARGE_LOCATION);
+        }
+
     }
 
     public DispensingConceptSetDescriptor() {
