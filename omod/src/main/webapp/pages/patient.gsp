@@ -86,7 +86,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
     </div>
 
     <div id="medication-list">
-        <h3>${ ui.message("dispensing.medication.lastDispensed") }</h3>
+        <h3>${ ui.message("dispensing.medication.lastDispensedByPatient") }</h3>
         <table id="medicationTable">
             <thead>
             <tr>
