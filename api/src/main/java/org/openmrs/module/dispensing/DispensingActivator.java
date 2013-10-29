@@ -57,13 +57,6 @@ public class DispensingActivator implements ModuleActivator {
 	 * @see ModuleActivator#started()
 	 */
 	public void started() {
-		log.info("Dispensing Module started");
-	}
-	
-	/**
-	 * @see ModuleActivator#willStop()
-	 */
-	public void willStop() {
 
         try {
             // load the dispensing form
@@ -75,6 +68,13 @@ public class DispensingActivator implements ModuleActivator {
             throw new RuntimeException("failed to setup the required modules", e);
         }
 
+		log.info("Dispensing Module started");
+	}
+	
+	/**
+	 * @see ModuleActivator#willStop()
+	 */
+	public void willStop() {
 		log.info("Stopping Dispensing Module");
 	}
 	
