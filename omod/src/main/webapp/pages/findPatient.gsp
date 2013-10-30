@@ -29,6 +29,7 @@
                 sPaginationType: "full_numbers",
                 bSort: false,
                 bAutoWidth: false,
+
                 aoColumns: [
                     {"sWidth": "13%"},
                     {"sWidth": "20%"},
@@ -39,7 +40,7 @@
                     {"sWidth": "26%"}
                 ],
                 sDom: 't<"fg-toolbar ui-toolbar ui-corner-bl ui-corner-br ui-helper-clearfix datatables-info-and-pg"ip>'
-            });
+            }).rowGrouping();
         }
     });
 </script>
