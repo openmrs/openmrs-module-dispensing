@@ -11,6 +11,11 @@
         { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
         { label: "${ ui.message("dispensing.app.label") }", link: "${ ui.pageLink("dispensing", "findPatient") }" }
     ];
+
+    function reloadPageToUpdateListMedicationDispensingByLocation() {
+        window.location.reload();
+    }
+
 </script>
 
 <script type="text/javascript">
@@ -40,7 +45,7 @@
                     {"sWidth": "26%"}
                 ],
                 sDom: 't<"fg-toolbar ui-toolbar ui-corner-bl ui-corner-br ui-helper-clearfix datatables-info-and-pg"ip>'
-            }).rowGrouping();
+            });
         }
     });
 </script>
