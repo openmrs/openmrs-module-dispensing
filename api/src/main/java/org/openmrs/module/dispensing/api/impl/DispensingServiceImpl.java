@@ -84,7 +84,8 @@ public class DispensingServiceImpl extends BaseOpenmrsService implements Dispens
     public List<DispensedMedication> getDispensedMedication(Patient patient, List<Location> locations, Date fromDate, Date toDate, Integer index, Integer count) {
         List<DispensedMedication> dispensedMedications = null;
         DispensingConceptSetDescriptor dispensingConceptSetDescriptor = new DispensingConceptSetDescriptor(conceptService, locationService);
-        List<Obs> observations = obsService.getObservations(Arrays.asList((Person) patient)
+        List<Person> persons = patient == null ? null : Arrays.asList((Person) patient);
+        List<Obs> observations = obsService.getObservations(persons
                 , null
                 , Arrays.asList(dispensingConceptSetDescriptor.getDispensingSetConcept())
                 , null, null
