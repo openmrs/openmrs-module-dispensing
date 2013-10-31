@@ -17,28 +17,6 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
 
 <script type="text/javascript">
     jq(function() {
-
-        if (parseInt (medicationListSize, 10) > 0 ) {
-            jq("#medicationTable").dataTable({
-                bFilter: false,
-                bJQueryUI: true,
-                bLengthChange: false,
-                iDisplayLength: 10,
-                sPaginationType: "full_numbers",
-                bSort: false,
-                bAutoWidth: false,
-                aoColumns: [
-                    {"sWidth": "13%"},
-                    {"sWidth": "20%"},
-                    {"sWidth": "7%"},
-                    {"sWidth": "12%"},
-                    {"sWidth": "10%"},
-                    {"sWidth": "12%"},
-                    {"sWidth": "26%"}
-                ],
-                sDom: 't<"fg-toolbar ui-toolbar ui-corner-bl ui-corner-br ui-helper-clearfix datatables-info-and-pg"ip>'
-            });
-        }
         jq('#actions .cancel').click(function() {
             emr.navigateTo({
                 provider: "dispensing",
@@ -122,6 +100,20 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
             <% } %>
             </tbody>
         </table>
+
+
+        ${ ui.includeFragment("uicommons", "widget/dataTable", [ object: "#medicationTable",
+                options: [
+                        bFilter: true,
+                        bJQueryUI: true,
+                        bLengthChange: false,
+                        iDisplayLength: 10,
+                        sPaginationType: '\"full_numbers\"',
+                        bSort: false,
+                        sDom: '\'ft<\"fg-toolbar ui-toolbar ui-corner-bl ui-corner-br ui-helper-clearfix datatables-info-and-pg \"ip>\''
+                ]
+        ]) }
+
     </div>
 
 </div>
