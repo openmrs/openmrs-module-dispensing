@@ -4,6 +4,7 @@
     }
 
     ui.decorateWith("appui", "standardEmrPage")
+    ui.includeJavascript("uicommons", "datatables/jquery.dataTables.min.js")
 %>
 
 <script type="text/javascript">
