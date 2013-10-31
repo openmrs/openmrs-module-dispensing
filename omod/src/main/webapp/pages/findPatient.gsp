@@ -32,18 +32,6 @@ ${ ui.includeFragment("emr", "widget/findPatient", [
         targetPage: "patient"
 ]) }
 
-${ ui.includeFragment("uicommons", "widget/dataTable", [ object: "#medicationTable",
-        options: [
-                bFilter: true,
-                bJQueryUI: true,
-                bLengthChange: false,
-                iDisplayLength: 10,
-                sPaginationType: '\"full_numbers\"',
-                bSort: false,
-                sDom: '\'ft<\"fg-toolbar ui-toolbar ui-corner-bl ui-corner-br ui-helper-clearfix datatables-info-and-pg \"ip>\''
-        ]
-]) }
-
 <div class="container">
 
     <div id="medication-list">
@@ -85,4 +73,16 @@ ${ ui.includeFragment("uicommons", "widget/dataTable", [ object: "#medicationTab
         </table>
     </div>
 </div>
+
+${ ui.includeFragment("uicommons", "widget/dataTable", [ object: "#medicationTable",
+        options: [
+                bFilter: true,
+                bJQueryUI: true,
+                bLengthChange: false,
+                iDisplayLength: 10,
+                sPaginationType: '\"full_numbers\"',
+                bSort: false,
+                sDom: '\'ft<\"fg-toolbar ui-toolbar ui-corner-bl ui-corner-br ui-helper-clearfix datatables-info-and-pg \"ip>\''
+        ]
+]) }
 
