@@ -46,14 +46,19 @@ ${ ui.includeFragment("emr", "widget/findPatient", [
                 <th>${ ui.message("dispensing.medication.duration") }</th>
                 <th>${ ui.message("dispensing.medication.dispensed") }</th>
                 <th>${ ui.message("dispensing.medication.origin") }</th>
-
             </tr>
             </thead>
             <tbody>
             <% if ( (dispensedMedicationListbyLocation == null)
                     || (dispensedMedicationListbyLocation!= null && dispensedMedicationListbyLocation.size() == 0)) { %>
             <tr>
-                <td colspan="7">${ ui.message("coreapps.none") }</td>
+                <td>${ ui.message("uicommons.dataTable.emptyTable") }</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
             <% } %>
             <% dispensedMedicationListbyLocation.each { medication ->

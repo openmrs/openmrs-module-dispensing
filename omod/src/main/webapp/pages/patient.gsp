@@ -81,7 +81,13 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
             <% if ( (dispensedMedicationList == null)
                     || (dispensedMedicationList!= null && dispensedMedicationList.size() == 0)) { %>
             <tr>
-                <td colspan="7">${ ui.message("coreapps.none") }</td>
+                <td>${ ui.message("uicommons.dataTable.emptyTable") }</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
             </tr>
             <% } %>
             <% dispensedMedicationList.each { medication ->
