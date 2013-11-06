@@ -9,7 +9,7 @@
             $('fieldset.medication').each(function() {
                 var numEmptyFields = 0;
                 var numFilledFields = 0;
-                $(this).find('input, select').each(function() {
+                $(this).find('input:not(:last), select').each(function() {
                     $(this).removeClass('emptyValue');
 
                     if ($(this).val()) {
