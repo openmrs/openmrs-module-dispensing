@@ -167,7 +167,7 @@
                 </p>
                 <p class="inline">
                     <label>
-                        <uimessage code="mirebalais.dispensing.medicationDuration"/>
+                        <uimessage code="mirebalais.dispensing.medicationDuration"  />
                     </label>
                     <obs id="duration{0}" class="doseInput" conceptId="CIEL:159368"/>
                     <obs id="durationUnit{0}" class="select-arrow" conceptId="PIH:6412"/>
@@ -177,6 +177,12 @@
                         <uimessage code="mirebalais.dispensing.medicationAmount"/>
                     </label>
                     <obs id="amount{0}" conceptId="PIH:9071"/>
+                </p>
+                <p>
+                    <label>
+                        <uimessage code="mirebalais.dispensing.medicationInstructions"/>
+                    </label>
+                    <obs id="instructions{0}" conceptId="PIH:9072"/>
                 </p>
             </fieldset>
         </obsgroup>
