@@ -168,7 +168,7 @@
                     <obs id="frequencyCoded{0}" class="select-arrow" conceptId="PIH:9363"
                          answerConceptIds=
                                  "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:5D,PIH:6D,PIH:7D,PIH:8D,PIH:9D,PIH:OM,PIH:ON,PIH:PRN,PIH:STAT,PIH:Q2H,PIH:Q3H,PIH:Q4H,PIH:Q6H,PIH:Q12H,PIH:CHLORO,PIH:5622"
-                         answerLabels="OD,BID,TID,QID,5D,6D,7D,8D,9D,OM,ON,PRN,STAT,Q2H,Q3H,Q4H,Q6H,Q12H,CHLORO,OTHER" />
+                         answerCodes="OD,BID,TID,QID,5D,6D,7D,8D,9D,OM,ON,PRN,STAT,Q2H,Q3H,Q4H,Q6H,Q12H,CHLORO,dispensing.general.other" />
                </p>
 
                 <p class="inline">
