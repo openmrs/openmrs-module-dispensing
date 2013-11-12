@@ -84,7 +84,7 @@
                 </td>
                 <td>
                     <label><uimessage code="emr.location"/></label>
-                    <span> <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/></span>
+                    <span> <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Dispensing Location"/></span>
                 </td>
                 <td>
                     <label><uimessage code="emr.patientDashBoard.date"/></label>
