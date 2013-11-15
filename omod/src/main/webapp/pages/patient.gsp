@@ -96,11 +96,11 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
             <tr>
                 <td>${ ui.format(medication.dispensedDateTime) }</td>
                 <td>${ ui.format(medication.drug.displayName) }</td>
-                <td>${ ui.format(medication.medicationDose.dose) + " " + medication.medicationDose.units }</td>
+                <td>${ ui.format(medication.medicationDose.dose) + " " + ui.format(medication.medicationDose.units) }</td>
                 <td>${ ui.format(medication.prescribedFrequency) }</td>
-                <td>${ ui.format(medication.medicationDuration.duration) + " " + medication.medicationDuration.timeUnits }</td>
+                <td>${ ui.format(medication.medicationDuration.duration) + " " + ui.format(medication.medicationDuration.timeUnits) }</td>
                 <td>${ ui.format(medication.quantityDispensed) }</td>
-                <td>${ ui.format(medication.timingOfHospitalPrescription)  + " - " + medication.dischargeLocation}  </td>
+                <td>${ ui.format(medication.timingOfHospitalPrescription) + " - " + ui.format(medication.dischargeLocation) }  </td>
             </tr>
             <% } %>
             </tbody>
