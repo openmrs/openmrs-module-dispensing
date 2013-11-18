@@ -27,8 +27,7 @@ public class DispensingRequest {
     private Patient patient;
     private Date datetime;
     private Drug drug;
-    private Integer frequency;
-    private String frequencyUnit;
+    private String frequency;
     private Integer dose;
     private String doseUnit;
     private Integer durationInDays;
@@ -67,20 +66,12 @@ public class DispensingRequest {
         this.drug = drug;
     }
 
-    public Integer getFrequency() {
+    public String getFrequency() {
         return frequency;
     }
 
-    public void setFrequency(Integer frequency) {
+    public void setFrequency(String frequency) {
         this.frequency = frequency;
-    }
-
-    public String getFrequencyUnit() {
-        return frequencyUnit;
-    }
-
-    public void setFrequencyUnit(String frequencyUnit) {
-        this.frequencyUnit = frequencyUnit;
     }
 
     public Integer getDose() {

@@ -7,10 +7,8 @@ import org.openmrs.Encounter;
 import org.openmrs.Obs;
 import org.openmrs.Location;
 import org.openmrs.api.ConceptService;
-import org.openmrs.module.dispensing.DispensedMedication;
-import org.openmrs.module.dispensing.DispensingApiConstants;
-import org.openmrs.module.dispensing.MedicationDose;
-import org.openmrs.module.dispensing.MedicationDuration;
+import org.openmrs.module.dispensing.*;
+
 import org.openmrs.api.LocationService;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptor;
@@ -20,7 +18,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
     private Concept dispensingSetConcept;
     private Concept medicationOrdersConcept;
     private Concept quantityOfMedicationDispensedConcept;
-    private Concept generalDrugFrequencyConcept;
+    private Concept drugFrequencyConcept;
     private Concept quantityOfMedicationPrescribedPerDoseConcept;
     private Concept unitsOfMedicationPrescribedPerDoseConcept;
     private Concept medicationDurationConcept;
@@ -40,7 +38,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
                 "dispensingSetConcept", DispensingApiConstants.CONCEPT_CODE_DISPENSING_MEDICATION_CONCEPT_SET,
                 "medicationOrdersConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_ORDERS,
                 "quantityOfMedicationDispensedConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_DISPENSED,
-                "generalDrugFrequencyConcept", DispensingApiConstants.CONCEPT_CODE_GENERAL_DRUG_FREQUENCY,
+                "drugFrequencyConcept", DispensingApiConstants.CONCEPT_CODE_DRUG_FREQUENCY,
                 "quantityOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_PRESCRIBED_PER_DOSE,
                 "unitsOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_UNITS_OF_MEDICATION_PRESCRIBED_PER_DOSE,
                 "medicationDurationConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_DURATION,
@@ -76,12 +74,12 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         this.dispensingSetConcept = dispensingSetConcept;
     }
 
-    public Concept getGeneralDrugFrequencyConcept() {
-        return generalDrugFrequencyConcept;
+    public Concept getDrugFrequencyConcept() {
+        return drugFrequencyConcept;
     }
 
-    public void setGeneralDrugFrequencyConcept(Concept generalDrugFrequencyConcept) {
-        this.generalDrugFrequencyConcept = generalDrugFrequencyConcept;
+    public void setDrugFrequencyConcept(Concept drugFrequencyConcept) {
+        this.drugFrequencyConcept = drugFrequencyConcept;
     }
 
     public Concept getMedicationDurationConcept() {
@@ -175,8 +173,8 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         MedicationDose medicationDose = GetMedicationDoseToDispensedMedication(obsGroup);
         dispensedMedication.setMedicationDose(medicationDose);
 
-        String frequency = getGeneralDrugFrequencyToDispensedMedication(obsGroup, dispensedMedication);
-        dispensedMedication.setPrescribedFrequency(frequency);
+        MedicationFrequency medicationFrequency = getMedicationFrequencyToDispensedMedication(obsGroup);
+        dispensedMedication.setMedicationFrequency(medicationFrequency);
 
         MedicationDuration medicationDuration =  getMedicationDurationToDispensedMedication(obsGroup);
         dispensedMedication.setMedicationDuration(medicationDuration);
@@ -228,14 +226,18 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         return  quantitydispensed;
     }
 
-    private String getGeneralDrugFrequencyToDispensedMedication(Obs obsGroup, DispensedMedication dispensedMedication) {
+    private MedicationFrequency getMedicationFrequencyToDispensedMedication(Obs obsGroup) {
         Obs obs;
-        String frequency = "";
-        obs = findMember(obsGroup, generalDrugFrequencyConcept);
+        obs = findMember(obsGroup,drugFrequencyConcept);
+        String frequency = null;
         if (obs != null){
-             frequency = obs.getValueText();
+             frequency = obs.getValueCoded().getName().getName();
         }
-        return frequency;
+        MedicationFrequency medicationFrequency = null;
+        if (StringUtils.isNotEmpty(frequency)){
+            medicationFrequency = new MedicationFrequency (frequency);
+        }
+        return medicationFrequency;
     }
 
     private MedicationDuration getMedicationDurationToDispensedMedication(Obs obsGroup) {

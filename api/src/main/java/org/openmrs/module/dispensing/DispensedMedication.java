@@ -11,7 +11,7 @@ public class DispensedMedication {
     Date dispensedDateTime;
     Drug drug;
     MedicationDose medicationDose;
-    String prescribedFrequency;
+    MedicationFrequency medicationFrequency;
     Integer quantityDispensed;
     MedicationDuration medicationDuration;
     String timingOfHospitalPrescription;
@@ -21,13 +21,16 @@ public class DispensedMedication {
     public DispensedMedication() {
     }
 
-    public DispensedMedication(Date dispensedDateTime, Drug drug, Obs existingObs, MedicationDose medicationDose, MedicationDuration medicationDuration, String prescribedFrequency, Integer quantityDispensed, String timingOfHospitalPrescription, Location dischargeLocation) {
+    public DispensedMedication(Date dispensedDateTime, Drug drug, Obs existingObs,
+                               MedicationDose medicationDose, MedicationDuration medicationDuration,
+                               MedicationFrequency medicationFrequency, Integer quantityDispensed,
+                               String timingOfHospitalPrescription, Location dischargeLocation) {
         this.dispensedDateTime = dispensedDateTime;
         this.drug = drug;
         this.existingObs = existingObs;
         this.medicationDose = medicationDose;
         this.medicationDuration = medicationDuration;
-        this.prescribedFrequency = prescribedFrequency;
+        this.medicationFrequency = medicationFrequency;
         this.quantityDispensed = quantityDispensed;
         this.timingOfHospitalPrescription = timingOfHospitalPrescription;
         this.dischargeLocation = dischargeLocation;
@@ -67,12 +70,12 @@ public class DispensedMedication {
         this.medicationDuration = medicationDuration;
     }
 
-    public String getPrescribedFrequency() {
-        return prescribedFrequency;
+    public MedicationFrequency getMedicationFrequency() {
+        return medicationFrequency;
     }
 
-    public void setPrescribedFrequency(String prescribedFrequency) {
-        this.prescribedFrequency = prescribedFrequency;
+    public void setMedicationFrequency(MedicationFrequency medicationFrequency) {
+        this.medicationFrequency = medicationFrequency;
     }
 
     public Integer getQuantityDispensed() {
