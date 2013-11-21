@@ -23,6 +23,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
     private Concept unitsOfMedicationPrescribedPerDoseConcept;
     private Concept medicationDurationConcept;
     private Concept timeUnitsConcept;
+    private Concept administrationInstructions;
 
     // note that these last two concepts aren't part of the set, but included as top-level obs on the encounter (see toDispensedMedcation method)
     private Concept timingOfHospitalPrescriptionConcept;
@@ -42,7 +43,8 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
                 "quantityOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_PRESCRIBED_PER_DOSE,
                 "unitsOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_UNITS_OF_MEDICATION_PRESCRIBED_PER_DOSE,
                 "medicationDurationConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_DURATION,
-                "timeUnitsConcept", DispensingApiConstants.CONCEPT_CODE_TIME_UNITS
+                "timeUnitsConcept", DispensingApiConstants.CONCEPT_CODE_TIME_UNITS,
+                "administrationInstructions", DispensingApiConstants.CONCEPT_CODE_ADMINISTRATION_INSTRUCTIONS
         );
 
         timingOfHospitalPrescriptionConcept = conceptService.getConceptByMapping(DispensingApiConstants.CONCEPT_CODE_HOSPITAL_PRESCRIPTION_TIMING,
@@ -144,6 +146,14 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
 
     public void setDischargeLocationConcept(Concept dischargeLocation) {
         this.dischargeLocationConcept = dischargeLocation;
+    }
+
+    public Concept getAdministrationInstructions() {
+        return administrationInstructions;
+    }
+
+    public void setAdministrationInstructions(Concept administrationInstructions) {
+        this.administrationInstructions = administrationInstructions;
     }
 
     public boolean isDispensedMedication(Obs obsGroup){

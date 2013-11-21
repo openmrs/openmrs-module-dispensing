@@ -17,5 +17,6 @@ public class DispensingApiConstants {
     public static final String CONCEPT_CODE_TIME_UNITS = "Time units";
     public static final String CONCEPT_CODE_HOSPITAL_PRESCRIPTION_TIMING= "Hospital prescription timing";
     public static final String CONCEPT_CODE_DISCHARGE_LOCATION = "Discharge location";
+    public static final String CONCEPT_CODE_ADMINISTRATION_INSTRUCTIONS = "Prescription instructions non-coded";
 
 }
