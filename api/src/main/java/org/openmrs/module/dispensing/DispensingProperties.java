@@ -1,11 +1,12 @@
 package org.openmrs.module.dispensing;
 
 import org.openmrs.Concept;
-import org.openmrs.module.emrapi.EmrApiProperties;
+import org.openmrs.module.emrapi.EmrApiConstants;
+import org.openmrs.module.emrapi.utils.ModuleProperties;
 import org.springframework.stereotype.Component;
 
 @Component("dispensingProperties")
-public class DispensingProperties extends EmrApiProperties {
+public class DispensingProperties extends ModuleProperties {
 
     public Concept getDispensingConstructConcept() {
         return getEmrApiConceptByMapping(DispensingApiConstants.CONCEPT_CODE_DISPENSING_MEDICATION_CONCEPT_SET);
@@ -43,4 +44,7 @@ public class DispensingProperties extends EmrApiProperties {
         return getEmrApiConceptByMapping(DispensingApiConstants.CONCEPT_CODE_ADMINISTRATION_INSTRUCTIONS);
     }
 
+    protected Concept getEmrApiConceptByMapping(String code) {
+        return getSingleConceptByMapping(conceptService.getConceptSourceByName(EmrApiConstants.EMR_CONCEPT_SOURCE_NAME), code);
+    }
 }
