@@ -33,10 +33,10 @@ public class DrugImporter {
 
     private CellProcessor[] getCellProcessors() {
         return new CellProcessor[] {
-                new Optional(new Trim()),
-                new Trim(),
-                new Trim(),
-                new Optional(new Trim())
+                new Trim(),               // uuid
+                new Optional(new Trim()),   // OpenBoxes code
+                new Trim(),                 // Name
+                new Trim()    // Concept Code
         };
     }
 
