@@ -12,6 +12,7 @@ import org.openmrs.module.dispensing.*;
 import org.openmrs.api.LocationService;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptor;
+import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptorField;
 
 public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
 
@@ -35,16 +36,16 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
 
         this.locationService = locationService;
 
-        setup(conceptService,  EmrApiConstants.EMR_CONCEPT_SOURCE_NAME,
-                "dispensingSetConcept", DispensingApiConstants.CONCEPT_CODE_DISPENSING_MEDICATION_CONCEPT_SET,
-                "medicationOrdersConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_ORDERS,
-                "quantityOfMedicationDispensedConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_DISPENSED,
-                "drugFrequencyConcept", DispensingApiConstants.CONCEPT_CODE_DRUG_FREQUENCY,
-                "quantityOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_PRESCRIBED_PER_DOSE,
-                "unitsOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_UNITS_OF_MEDICATION_PRESCRIBED_PER_DOSE,
-                "medicationDurationConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_DURATION,
-                "timeUnitsConcept", DispensingApiConstants.CONCEPT_CODE_TIME_UNITS,
-                "administrationInstructions", DispensingApiConstants.CONCEPT_CODE_ADMINISTRATION_INSTRUCTIONS
+        setup(conceptService, EmrApiConstants.EMR_CONCEPT_SOURCE_NAME,
+                ConceptSetDescriptorField.required("dispensingSetConcept", DispensingApiConstants.CONCEPT_CODE_DISPENSING_MEDICATION_CONCEPT_SET),
+                ConceptSetDescriptorField.required("medicationOrdersConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_ORDERS),
+                ConceptSetDescriptorField.required("quantityOfMedicationDispensedConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_DISPENSED),
+                ConceptSetDescriptorField.required("drugFrequencyConcept", DispensingApiConstants.CONCEPT_CODE_DRUG_FREQUENCY),
+                ConceptSetDescriptorField.required("quantityOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_QUANTITY_OF_MEDICATION_PRESCRIBED_PER_DOSE),
+                ConceptSetDescriptorField.required("unitsOfMedicationPrescribedPerDoseConcept", DispensingApiConstants.CONCEPT_CODE_UNITS_OF_MEDICATION_PRESCRIBED_PER_DOSE),
+                ConceptSetDescriptorField.required("medicationDurationConcept", DispensingApiConstants.CONCEPT_CODE_MEDICATION_DURATION),
+                ConceptSetDescriptorField.required("timeUnitsConcept", DispensingApiConstants.CONCEPT_CODE_TIME_UNITS),
+                ConceptSetDescriptorField.required("administrationInstructions", DispensingApiConstants.CONCEPT_CODE_ADMINISTRATION_INSTRUCTIONS)
         );
 
         timingOfHospitalPrescriptionConcept = conceptService.getConceptByMapping(DispensingApiConstants.CONCEPT_CODE_HOSPITAL_PRESCRIPTION_TIMING,
