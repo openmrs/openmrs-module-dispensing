@@ -13,6 +13,11 @@
  */
 package org.openmrs.module.dispensing.api.impl;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.openmrs.Location;
@@ -29,11 +34,6 @@ import org.openmrs.module.dispensing.api.DispensingService;
 import org.openmrs.module.dispensing.api.db.DispensingDAO;
 import org.openmrs.module.dispensing.descriptor.DispensingConceptSetDescriptor;
 import org.openmrs.module.emrapi.EmrApiProperties;
-
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
 
 /**
  * It is a default implementation of {@link DispensingService}.
@@ -94,8 +94,6 @@ public class DispensingServiceImpl extends BaseOpenmrsService implements Dispens
         if (observations != null && observations.size() > 0 ){
             dispensedMedications = new ArrayList<DispensedMedication>();
             for (Obs observation : observations) {
-                log.error("obsId" + observation.getId().toString());
-
                 DispensedMedication dispensedMedication;
                 try {
                     dispensedMedication = dispensingConceptSetDescriptor.toDispensedMedication(observation);
