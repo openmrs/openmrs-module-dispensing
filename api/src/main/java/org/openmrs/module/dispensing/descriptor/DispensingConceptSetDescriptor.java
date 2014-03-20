@@ -4,12 +4,15 @@ import org.apache.commons.lang.StringUtils;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
 import org.openmrs.Encounter;
-import org.openmrs.Obs;
 import org.openmrs.Location;
+import org.openmrs.Obs;
 import org.openmrs.api.ConceptService;
-import org.openmrs.module.dispensing.*;
-
 import org.openmrs.api.LocationService;
+import org.openmrs.module.dispensing.DispensedMedication;
+import org.openmrs.module.dispensing.DispensingApiConstants;
+import org.openmrs.module.dispensing.MedicationDose;
+import org.openmrs.module.dispensing.MedicationDuration;
+import org.openmrs.module.dispensing.MedicationFrequency;
 import org.openmrs.module.emrapi.EmrApiConstants;
 import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptor;
 import org.openmrs.module.emrapi.descriptor.ConceptSetDescriptorField;
@@ -176,6 +179,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
             throw new IllegalArgumentException("Not an obs group for a dispensed diagnosis" + obsGroup);
         }
         DispensedMedication dispensedMedication = new DispensedMedication();
+        dispensedMedication.setExistingObs(obsGroup);
         dispensedMedication.setDispensedDateTime(obsGroup.getEncounter().getEncounterDatetime());
 
         Drug drug = getDrugToDispensedMedication(obsGroup);
