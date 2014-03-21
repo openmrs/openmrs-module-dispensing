@@ -157,7 +157,9 @@
                         <uimessage code="dispensing.medication.dose"/>
                     </label>
                     <obs id="dose{0}" class="doseInput" conceptId="CIEL:160856"/>
-                    <obs id="doseUnit{0}" placeholder="Eg: mg" class="doseInput" conceptId="PIH:9074"/>
+                    <obs id="doseUnit{0}" class="doseInput" conceptId="PIH:9074"
+                         answers="mg,g,mL,Application,Capsule,Comprimé,Goutte,Microgramme,Patch,Pompe,Sachet,Unités internationals"
+                         answerCodes="dispensing.units.mg,dispensing.units.g,dispensing.units.mL,dispensing.units.application,dispensing.units.capsule,dispensing.units.tablet,dispensing.units.drop,dispensing.units.mcg,dispensing.units.patch,dispensing.units.pump,dispensing.units.sachet,dispensing.units.IU"/>
                 </p>
                 <p class="inline">
                     <label>
