@@ -1,22 +1,31 @@
 package org.openmrs.module.dispensing;
 
 import org.openmrs.Drug;
-import org.openmrs.Obs;
 import org.openmrs.Location;
-import java.util.Date;
-import java.util.List;
+import org.openmrs.Obs;
 
+import java.util.Date;
+
+/**
+ * Convenience representation of a medication that was dispensed to a patient.
+ *
+ * In the underlying data model this is represented as an Obs group (pointed to by the existingObs field), and the
+ * mapping of obs group members to fields in this class are in
+ * {@link org.openmrs.module.dispensing.descriptor.DispensingConceptSetDescriptor}
+ */
 public class DispensedMedication {
 
-    Date dispensedDateTime;
-    Drug drug;
-    MedicationDose medicationDose;
-    MedicationFrequency medicationFrequency;
-    Integer quantityDispensed;
-    MedicationDuration medicationDuration;
-    String timingOfHospitalPrescription;
-    Location dischargeLocation;
-    Obs existingObs;
+    private Date dispensedDateTime;
+    private Drug drug;
+    private MedicationDose medicationDose;
+    private MedicationFrequency medicationFrequency;
+    private Integer quantityDispensed;
+    private MedicationDuration medicationDuration;
+    private String timingOfHospitalPrescription;
+    private Location dischargeLocation;
+    private String administrationInstructions;
+
+    private Obs existingObs;
 
     public DispensedMedication() {
     }
@@ -109,4 +118,13 @@ public class DispensedMedication {
     public void setDischargeLocation(Location dischargeLocation) {
         this.dischargeLocation = dischargeLocation;
     }
+
+    public String getAdministrationInstructions() {
+        return administrationInstructions;
+    }
+
+    public void setAdministrationInstructions(String administrationInstructions) {
+        this.administrationInstructions = administrationInstructions;
+    }
+
 }

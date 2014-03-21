@@ -74,6 +74,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
                 <th>${ ui.message("dispensing.medication.duration") }</th>
                 <th>${ ui.message("dispensing.medication.dispensed") }</th>
                 <th>${ ui.message("dispensing.medication.origin") }</th>
+                <th>${ ui.message("dispensing.medication.instructions") }</th>
                 <th></th>
             </tr>
             </thead>
@@ -82,6 +83,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
                     || (dispensedMedicationList!= null && dispensedMedicationList.size() == 0)) { %>
             <tr>
                 <td>${ ui.message("uicommons.dataTable.emptyTable") }</td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -101,7 +103,8 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
                 <td>${ ui.format(medication.medicationFrequency.frequency) }</td>
                 <td>${ ui.format(medication.medicationDuration.duration) + " " + ui.format(medication.medicationDuration.timeUnits) }</td>
                 <td>${ ui.format(medication.quantityDispensed) }</td>
-                <td>${ ui.format(medication.timingOfHospitalPrescription) + " - " + ui.format(medication.dischargeLocation) }  </td>
+                <td>${ ui.format(medication.timingOfHospitalPrescription) + " - " + ui.format(medication.dischargeLocation) }</td>
+                <td>${ ui.format(medication.administrationInstructions) }</td>
                 <td>
                     <a href="${ ui.pageLink("htmlformentryui", "htmlform/editHtmlFormWithStandardUi", [
                                     patientId: medication.existingObs.personId,

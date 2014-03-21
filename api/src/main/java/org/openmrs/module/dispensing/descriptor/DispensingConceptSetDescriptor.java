@@ -164,11 +164,11 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         return (obsGroup != null) ? obsGroup.getConcept().equals(dispensingSetConcept) : false;
     }
 
-    public Obs findObsatTopLevel ( Obs obsGroup, Concept concept){
+    public Obs findObsAtTopLevel(Obs obsGroup, Concept concept) {
         Encounter encounter  = obsGroup.getEncounter();
-        for (Obs observation : encounter.getObsAtTopLevel(true)) {
-            if (observation.getConcept().getName() == concept.getName()){
-                   return observation;
+        for (Obs observation : encounter.getObsAtTopLevel(false)) {
+            if (observation.getConcept().equals(concept)) {
+                return observation;
             }
         }
         return null;
@@ -185,7 +185,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         Drug drug = getDrugToDispensedMedication(obsGroup);
         dispensedMedication.setDrug(drug);
 
-        MedicationDose medicationDose = GetMedicationDoseToDispensedMedication(obsGroup);
+        MedicationDose medicationDose = getMedicationDoseToDispensedMedication(obsGroup);
         dispensedMedication.setMedicationDose(medicationDose);
 
         MedicationFrequency medicationFrequency = getMedicationFrequencyToDispensedMedication(obsGroup);
@@ -203,13 +203,21 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         Location dischargeLocation = getDischargeLocationToDispensedMedication(obsGroup);
         dispensedMedication.setDischargeLocation(dischargeLocation);
 
+        String administrationInstructions = getAdministrationInstructionsToDispensedMedication(obsGroup);
+        dispensedMedication.setAdministrationInstructions(administrationInstructions);
+
         return dispensedMedication;
+    }
+
+    private String getAdministrationInstructionsToDispensedMedication(Obs obsGroup) {
+        Obs obs = findMember(obsGroup, administrationInstructions);
+        return obs == null ? null : obs.getValueText();
     }
 
     public Location getDischargeLocationToDispensedMedication(Obs obsGroup) {
         Obs obs;
         Location dischargeLocation = null;
-        obs = findObsatTopLevel(obsGroup, dischargeLocationConcept);
+        obs = findObsAtTopLevel(obsGroup, dischargeLocationConcept);
         if (obs != null){
             int dischargeLocationId  = Integer.valueOf(obs.getValueText());
             dischargeLocation = locationService.getLocation(dischargeLocationId);
@@ -220,7 +228,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
     private String getTimingOfHospitalPrescriptionToDispensedMedication(Obs obsGroup) {
         String timingOfHospitalPrescription = null;
         Obs obs;
-        obs =  findObsatTopLevel(obsGroup, timingOfHospitalPrescriptionConcept);
+        obs =  findObsAtTopLevel(obsGroup, timingOfHospitalPrescriptionConcept);
         if (obs !=null){
             timingOfHospitalPrescription = obs.getValueCoded().getName().getName();
         }
@@ -235,7 +243,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         if (obs != null) {
             Double valueNumeric = obs.getValueNumeric();
             if (valueNumeric != null) {
-                quantitydispensed = new Integer(valueNumeric.intValue());
+                quantitydispensed = valueNumeric.intValue();
             }
         }
         return  quantitydispensed;
@@ -262,7 +270,7 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         if (obs != null) {
             Double valueNumeric = obs.getValueNumeric();
             if (valueNumeric != null){
-                duration = new Integer(valueNumeric.intValue());
+                duration = valueNumeric.intValue();
             }
         }
         obs = findMember(obsGroup, timeUnitsConcept);
@@ -290,14 +298,14 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
         return drug;
     }
 
-    public MedicationDose GetMedicationDoseToDispensedMedication (Obs obsGroup) {
+    public MedicationDose getMedicationDoseToDispensedMedication(Obs obsGroup) {
             Obs obs;
             obs = findMember(obsGroup, quantityOfMedicationPrescribedPerDoseConcept);
             Integer dose = null;
             if (obs != null) {
                 Double valueNumeric = obs.getValueNumeric();
                 if (valueNumeric != null) {
-                    dose = new Integer(valueNumeric.intValue());
+                    dose = valueNumeric.intValue();
                 }
             }
 
