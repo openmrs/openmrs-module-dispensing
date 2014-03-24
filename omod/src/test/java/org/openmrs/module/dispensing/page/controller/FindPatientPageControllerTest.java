@@ -1,29 +1,23 @@
 package org.openmrs.module.dispensing.page.controller;
 
-import org.databene.benerator.gui.Setup;
 import org.junit.Before;
 import org.junit.Test;
-
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.mockito.BDDMockito.given;
-import static org.mockito.Matchers.*;
-import static org.mockito.Mockito.*;
-
 import org.mockito.Matchers;
+import org.openmrs.Location;
 import org.openmrs.Patient;
-import org.openmrs.api.PatientService;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.dispensing.DispensedMedication;
 import org.openmrs.module.dispensing.api.DispensingService;
-import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.ui.framework.page.PageModel;
-import org.openmrs.Location;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+
+import static org.mockito.Matchers.eq;
+import static org.mockito.Matchers.isNull;
+import static org.mockito.Mockito.*;
 
 /**
  * Created with IntelliJ IDEA.
@@ -59,12 +53,12 @@ public class FindPatientPageControllerTest {
         Location location = mock(Location.class);
         Calendar cal = Calendar.getInstance();
         Date currentTime = cal.getTime();
-        cal.add(Calendar.MONTH, -6);
-        Date sixMonthsAgo = cal.getTime();
+        cal.add(Calendar.DAY_OF_MONTH, -3);
+        Date daysAgo = cal.getTime();
         dispensedMedicationList = new ArrayList<DispensedMedication>();
 
         when(emrContext.getSessionLocation()).thenReturn(location);
-        when(dispensingService.getDispensedMedication(isNull(Patient.class), Matchers.anyListOf(Location.class), eq( sixMonthsAgo) , eq( currentTime), isNull(Integer.class), isNull(Integer.class))).thenReturn(dispensedMedicationList);
+        when(dispensingService.getDispensedMedication(isNull(Patient.class), Matchers.anyListOf(Location.class), eq( daysAgo) , isNull(Date.class), isNull(Integer.class), isNull(Integer.class))).thenReturn(dispensedMedicationList);
 
         findPatientController.controller(emrContext, model, dispensingService);
 
