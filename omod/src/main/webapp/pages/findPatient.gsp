@@ -46,6 +46,7 @@ ${ ui.includeFragment("emr", "widget/findPatient", [
                 <th>${ ui.message("dispensing.medication.duration") }</th>
                 <th>${ ui.message("dispensing.medication.dispensed") }</th>
                 <th>${ ui.message("dispensing.medication.origin") }</th>
+                <th>${ ui.message("dispensing.medication.instructions") }</th>
             </tr>
             </thead>
             <tbody>
@@ -53,6 +54,7 @@ ${ ui.includeFragment("emr", "widget/findPatient", [
                     || (dispensedMedicationListbyLocation!= null && dispensedMedicationListbyLocation.size() == 0)) { %>
             <tr>
                 <td>${ ui.message("uicommons.dataTable.emptyTable") }</td>
+                <td></td>
                 <td></td>
                 <td></td>
                 <td></td>
@@ -72,6 +74,7 @@ ${ ui.includeFragment("emr", "widget/findPatient", [
                 <td>${ ui.format(medication.medicationDuration.duration) + " " + ui.format(medication.medicationDuration.timeUnits) }</td>
                 <td>${ ui.format(medication.quantityDispensed) }</td>
                 <td>${ ui.format(medication.timingOfHospitalPrescription)  + " - " + ui.format(medication.dischargeLocation)}  </td>
+                <td>${ ui.format(medication.administrationInstructions) }</td>
             </tr>
             <% } %>
             </tbody>
