@@ -135,6 +135,16 @@
 
                 <obs id="Discharge location" required="true" style="location" class="select-arrow" conceptId="PIH:9293" />
             </span>
+            <span class="input-container provider">
+                <label>
+                    <uimessage code="mirebalais.dispensing.prescriber"/>
+                </label>
+
+                <span class="select-arrow">
+                    <encounterProviderAndRole encounterRole="c458d78e-8374-4767-ad58-9f8fe276e01c"
+                                              providerRoles="3182ee51-b895-4804-a342-5f261e995222,556ceee6-d899-43d4-a98b-7973ebc85b75"/>
+                </span>
+            </span>
         </div>
    </div>
 
@@ -196,17 +206,8 @@
         </obsgroup>
     </repeat>
 
-    <p class="prescriber">
-        <label>
-            <uimessage code="mirebalais.dispensing.prescriber"/>
-        </label>
-        <span class="select-arrow">
-            <encounterProviderAndRole encounterRole="c458d78e-8374-4767-ad58-9f8fe276e01c"
-                                      providerRoles="3182ee51-b895-4804-a342-5f261e995222,556ceee6-d899-43d4-a98b-7973ebc85b75"/>
-        </span>
-    </p>
-
     <ifMode mode="VIEW" include="false">
+        <br/><br/>
         <div id="buttons">
             <button class="submitButton confirm right" onclick="submitHtmlForm()"><uimessage code="mirebalais.save"/><i class="icon-spinner icon-spin icon-2x" style="display: none; margin-left: 10px;"></i></button>
             <button type="button" class="cancel">
