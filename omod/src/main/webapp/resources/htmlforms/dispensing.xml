@@ -6,6 +6,24 @@
             var numErrors = 0;
             var numDispensed = 0;
             var scrolled = false;
+
+            var requiredAndEmpty = function(jqEl) {
+                // medication-instructions is optional
+                // duration and duration-units are optional if frequency = STAT
+                // everything else is required
+                var empty = !jqEl.val() &amp;&amp; jqEl.siblings('input[type="hidden"]').length == 0 || jqEl.siblings('input[type="hidden"]').attr("value") == "";
+                var optional = false;
+                if (jqEl.closest('.medication-instructions').length) {
+                    optional = true;
+                } else if (jqEl.closest('.duration').length || jqEl.closest('.duration-unit').length) {
+                    var freq = jqEl.closest('.medication').find('.frequency select')[0];
+                    if (freq.selectedOptions &amp;&amp; freq.selectedOptions[0].label == 'STAT') {
+                        optional = true;
+                    }
+                }
+                return empty &amp;&amp; !optional;
+            }
+
             $('fieldset.medication').each(function() {
                 var numEmptyFields = 0;
                 var numFilledFields = 0;
@@ -18,26 +36,25 @@
                         numEmptyFields += 1;
                     }
                 });
-                if (numFilledFields > 0 &amp;&amp; numEmptyFields > 0) {
-                    $(this).find('input:not(:last), select').each(function () {
-                        if(!$(this).val()) {
-                            if(!$(this).hasClass('illegalValue')) {
+
+                var anyErrors = false;
+                if (numFilledFields > 0) {
+                    $(this).find('input, select').each(function () {
+                        if (requiredAndEmpty($(this))) {
+                            if (!$(this).hasClass('illegalValue')) {
                                 $(this).addClass('emptyValue');
                             }
-                        } else {
-                            if($(this).siblings('input[type="hidden"]').length > 0) {
-                                if($(this).siblings('input[type="hidden"]').attr("value") == "") {
-                                    $(this).addClass('emptyValue');
-                                }
+                            anyErrors = true;
+                            if (!scrolled) {
+                                $(window).scrollTop($(this).offset().top);
+                                scrolled = true;
                             }
                         }
                     });
-                    $(this).find('.field-error').first().html("All fields are required!").show();
-                    numErrors += 1;
-                    if(!scrolled) {
-                        $(window).scrollTop($(this).offset().top);
-                        scrolled = true;
-                    }
+                }
+                if (anyErrors) {
+                    ++numErrors;
+                    $(this).find('.field-error').first().html("Required fields!").show();
 
                     $('.medication input.emptyValue, .medication select.emptyValue').on('blur', function() {
                         if ($(this).val()) {
@@ -45,10 +62,10 @@
                                 $(this).removeClass('emptyValue');
                             } else {
                                 if($(this).siblings('input[type="hidden"]').length = 0) {
-                                    $(this).removeClass('emptyValue').addClass('notEmpty');  
+                                    $(this).removeClass('emptyValue').addClass('notEmpty');
                                 } else {
                                     if($(this).siblings('input[type="hidden"]').attr("value") != "") {
-                                        $(this).removeClass('emptyValue').addClass('notEmpty');  
+                                        $(this).removeClass('emptyValue').addClass('notEmpty');
                                     }
                                 }
                             }
@@ -56,6 +73,7 @@
                             $(this).removeClass('notEmpty').addClass('emptyValue');
                         }
                     });
+
                 } else {
                     $(this).find('.field-error').first().html("").hide();
                     if (numFilledFields > 0) {
@@ -63,6 +81,7 @@
                     }
                 }
             });
+
             if (numErrors == 0 &amp;&amp; numDispensed == 0) {
                 $('fieldset.medication').first().find('.field-error').first().html("All fields are required!").show();
                 $(window).scrollTop(300);
@@ -177,7 +196,7 @@
                     </label>
 
 
-                    <obs id="frequencyCoded{0}" class="select-arrow" conceptId="PIH:9363"
+                    <obs id="frequencyCoded{0}" class="frequency select-arrow" conceptId="PIH:9363"
                          answerConceptIds=
                                  "PIH:OD,PIH:BID,PIH:TID,PIH:QID,PIH:5D,PIH:6D,PIH:7D,PIH:8D,PIH:9D,PIH:OM,PIH:ON,PIH:PRN,PIH:STAT,PIH:Q2H,PIH:Q3H,PIH:Q4H,PIH:Q6H,PIH:Q12H,PIH:5622"
                          answerCodes="OD,BID,TID,QID,5D,6D,7D,8D,9D,OM,ON,SOS,STAT,Q2H,Q3H,Q4H,Q6H,Q12H,dispensing.general.other" />
@@ -187,8 +206,8 @@
                     <label>
                         <uimessage code="mirebalais.dispensing.medicationDuration"  />
                     </label>
-                    <obs id="duration{0}" class="doseInput" conceptId="CIEL:159368"/>
-                        <obs id="durationUnit{0}" class="select-arrow" conceptId="PIH:6412" answerConceptIds="PIH:Days,PIH:1073,PIH:Months,PIH:Hours"/>
+                    <obs id="duration{0}" class="duration doseInput" conceptId="CIEL:159368"/>
+                        <obs id="durationUnit{0}" class="duration-unit select-arrow" conceptId="PIH:6412" answerConceptIds="PIH:Days,PIH:1073,PIH:Months,PIH:Hours"/>
                 </p>
                 <p class="inline">
                     <label>
@@ -200,7 +219,7 @@
                     <label>
                         <uimessage code="mirebalais.dispensing.medicationInstructions"/>
                     </label>
-                    <obs id="instructions{0}" conceptId="PIH:9072"/>
+                    <obs id="instructions{0}" class="medication-instructions" conceptId="PIH:9072"/>
                 </p>
             </fieldset>
         </obsgroup>
