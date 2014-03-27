@@ -1,5 +1,12 @@
 package org.openmrs.module.dispensing.importer;
 
+import java.io.IOException;
+import java.io.Reader;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import org.openmrs.Concept;
 import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
@@ -11,13 +18,6 @@ import org.supercsv.cellprocessor.Trim;
 import org.supercsv.cellprocessor.ift.CellProcessor;
 import org.supercsv.io.CsvBeanReader;
 import org.supercsv.prefs.CsvPreference;
-
-import java.io.IOException;
-import java.io.Reader;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 @Component
 public class DrugImporter {
@@ -66,10 +66,12 @@ public class DrugImporter {
         for (DrugImporterRow row : drugList) {
 
             // note that we currently don't store the inventory code anywhere!
-            if (openBoxesCodes.contains(row.getInventoryCode())) {
-                notes.addError("Duplicate Inventory Code: " + row.getInventoryCode());
+            if (row.getInventoryCode() != null) {     // inventory code is optional
+                if (openBoxesCodes.contains(row.getInventoryCode())) {
+                    notes.addError("Duplicate Inventory Code: " + row.getInventoryCode());
+                }
+                openBoxesCodes.add(row.getInventoryCode());
             }
-            openBoxesCodes.add(row.getInventoryCode());
 
             if (productNames.contains(row.getProductName())) {
                 notes.addError("Duplicate Product Name: " + row.getProductName());
