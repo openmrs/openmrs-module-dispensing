@@ -301,11 +301,11 @@ public class DispensingConceptSetDescriptor extends ConceptSetDescriptor {
     public MedicationDose getMedicationDoseToDispensedMedication(Obs obsGroup) {
             Obs obs;
             obs = findMember(obsGroup, quantityOfMedicationPrescribedPerDoseConcept);
-            Integer dose = null;
+            Double dose = null;
             if (obs != null) {
                 Double valueNumeric = obs.getValueNumeric();
                 if (valueNumeric != null) {
-                    dose = valueNumeric.intValue();
+                    dose = valueNumeric.doubleValue();
                 }
             }
 

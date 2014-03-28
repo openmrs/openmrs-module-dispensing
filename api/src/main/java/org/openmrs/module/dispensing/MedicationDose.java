@@ -2,22 +2,22 @@ package org.openmrs.module.dispensing;
 
 public class MedicationDose {
 
-    Integer dose;
+    Double dose;
     String units;
 
     public MedicationDose() {
     }
 
-    public MedicationDose(Integer dose, String units) {
+    public MedicationDose(Double dose, String units) {
         this.dose = dose;
         this.units = units;
     }
 
-    public Integer getDose() {
+    public Double getDose() {
         return dose;
     }
 
-    public void setDose(Integer dose) {
+    public void setDose(Double dose) {
         this.dose = dose;
     }
 
