@@ -54,7 +54,7 @@
                 }
                 if (anyErrors) {
                     ++numErrors;
-                    $(this).find('.field-error').first().html("Required fields!").show();
+                    $(this).find('.field-error').first().html("<uimessage code="dispensing.error.missingRequiredFields"/>").show();
 
                     $('.medication input.emptyValue, .medication select.emptyValue').on('blur', function() {
                         if ($(this).val()) {
