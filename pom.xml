@@ -41,6 +41,9 @@
         <htmlformentryVersion>2.3-SNAPSHOT</htmlformentryVersion>
         <htmlformentryuiVersion>1.0</htmlformentryuiVersion>
         <providermanagementModuleVersion>2.1</providermanagementModuleVersion>
+        <reportingVersion>0.9.1-SNAPSHOT</reportingVersion>
+        <serializationXstreamModuleVersion>0.2.7</serializationXstreamModuleVersion>
+        <calculationModuleVersion>1.0</calculationModuleVersion>
 
         <superCsvVersion>2.1.0</superCsvVersion>
 
@@ -265,6 +268,34 @@
         <dependency>
             <groupId>org.openmrs.module</groupId>
             <artifactId>providermanagement-api</artifactId>
+            <type>jar</type>
+            <scope>provided</scope>
+        </dependency>
+
+
+        <!-- required by emrapi/coreapps so we need these for tests -->
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>reporting-api</artifactId>
+            <type>jar</type>
+            <scope>test</scope>
+            <version>${reportingVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>calculation-api</artifactId>
+            <type>jar</type>
+            <scope>test</scope>
+            <version>${calculationModuleVersion}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.openmrs.module</groupId>
+            <artifactId>serialization.xstream-api</artifactId>
+            <type>jar</type>
+            <scope>test</scope>
+            <version>${serializationXstreamModuleVersion}</version>
         </dependency>
 
         <!-- other dependencies -->
