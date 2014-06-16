@@ -90,9 +90,11 @@
         });
     </script>
 
-    <h2>
-        <uimessage code="mirebalais.dispensing.dispensing"/>
-    </h2>
+    <ifMode mode="VIEW" include="false">
+        <h2>
+            <uimessage code="mirebalais.dispensing.dispensing"/>
+        </h2>
+    </ifMode>
     <table id="who-where-when-view">
         <tr>
             <includeIf velocityTest="$user.hasRole('Application Role: sysAdmin')">
