@@ -38,7 +38,7 @@
         <uiframeworkVersion>3.0</uiframeworkVersion>
         <appuiVersion>1.0</appuiVersion>
 		<appframeworkVersion>2.0</appframeworkVersion>
-        <htmlformentryVersion>2.3-SNAPSHOT</htmlformentryVersion>
+        <htmlformentryVersion>2.3</htmlformentryVersion>
         <htmlformentryuiVersion>1.0</htmlformentryuiVersion>
         <providermanagementModuleVersion>2.1</providermanagementModuleVersion>
         <reportingVersion>0.9.1-SNAPSHOT</reportingVersion>
