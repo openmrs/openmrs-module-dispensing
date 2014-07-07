@@ -7,10 +7,7 @@
         "url": "dispensing/findPatient.page",
         "icon": "icon-medicine",
         "order": 12,
-        "requiredPrivilege": "App: dispensing.app.dispense",
-        "extensionParams": {
-            "featureToggle": "dispenseMedicine"
-        }
+        "requiredPrivilege": "App: dispensing.app.dispense"
     },
     {
         "id": "dispensing.dashboardAction",
@@ -20,7 +17,6 @@
         "url": "htmlformentryui/htmlform/enterHtmlFormWithStandardUi.page?patientId={{patientId}}&visitId={{visit.id}}&definitionUiResource=dispensing:htmlforms/dispensing.xml",
         "icon": "icon-medicine",
         "order": 37,
-        "featureToggle": "dispenseMedicine",
         "requiredPrivilege": "Task: mirebalais.dispensing"
     }
 ]
