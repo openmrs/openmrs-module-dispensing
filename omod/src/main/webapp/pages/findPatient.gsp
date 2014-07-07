@@ -16,6 +16,12 @@
         window.location.reload();
     }
 
+    <% if (featureToggles.isFeatureEnabled("newPatientSearchWidget")) { %>
+        jq(function() {
+            jq('#patient-search').focus();
+        });
+    <% } %>
+
 </script>
 
 <script type="text/javascript">
