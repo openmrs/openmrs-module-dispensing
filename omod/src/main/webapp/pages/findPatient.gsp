@@ -26,11 +26,22 @@
     ${ ui.message("dispensing.app.label") }
 </h1>
 
+<% if (featureToggles.isFeatureEnabled("newPatientSearchWidget")) { %>
 
-${ ui.includeFragment("emr", "widget/findPatient", [
-        targetPageProvider: "dispensing",
-        targetPage: "patient"
-]) }
+    ${ ui.message("dispensing.searchPatientHeading") }
+    ${ ui.includeFragment("coreapps", "patientsearch/patientSearchWidget",
+            [ afterSelectedUrl: '/dispensing/patient.page?patientId={{patientId}}',
+                    showLastViewedPatients: 'false' ])}
+
+<% } else {%>
+
+    ${ ui.includeFragment("emr", "widget/findPatient", [
+            targetPageProvider: "dispensing",
+            targetPage: "patient"
+    ]) }
+
+<% } %>
+
 
 <div class="container">
 
