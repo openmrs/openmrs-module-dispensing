@@ -1,5 +1,7 @@
 <%
     ui.decorateWith("appui", "standardEmrPage")
+
+    ui.includeCss("dispensing", "patient.css")
 %>
 
 <script type="text/javascript">
@@ -11,6 +13,14 @@
 
     var medicationListSize = "${ dispensedMedicationList != null ? dispensedMedicationList.size() : 0 }";
 </script>
+
+<%
+    def visitOptions = visits?.collect {
+        return [ label: ui.format(it.visit.startDatetime) + " - " + ui.format(it.visit.stopDatetime),
+                 value: it.visit.id ];
+    }
+%>
+
 
 ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ]) }
 
@@ -28,7 +38,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
                 page: "htmlform/enterHtmlFormWithStandardUi",
                 query: {
                     patientId: "${ patient.id }",
-                    visitId: "${ visit?.id }",
+                    visitId: jq('#visit-field').val(),
                     definitionUiResource: "dispensing:htmlforms/dispensing.xml",
                     returnUrl: "${ ui.escapeJs(ui.pageLink("dispensing", "findPatient")) }",
                     breadcrumbOverride: "${ ui.escapeJs(breadcrumbOverride) }"
@@ -38,17 +48,12 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
         jq('#actions button').first().focus();
     });
 </script>
-<style>
-#existing-encounters {
-    margin-top: 2em;
-}
-</style>
 
-<% if (emrContext.activeVisit) { %>
+<% if (visits?.size() > 0) { %>
 
 <div class="container">
 
-    <h1>${ ui.message("coreapps.vitals.confirmPatientQuestion") }</h1>
+    <h1>${ ui.message("dispensing.confirmPatientQuestion") }</h1>
 
     <div id="actions" class="half-width">
         <button class="confirm big right">
@@ -58,9 +63,22 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
 
         <button class="cancel big">
             <i class="icon-arrow-left"></i>
-            ${ ui.message("coreapps.vitals.confirm.no") }
+            ${ ui.message("dispensing.findpatient.confirm.no") }
         </button>
     </div>
+
+    <div id="visit-options">
+        <p>
+            ${ ui.includeFragment("uicommons", "field/dropDown", [
+                    id: "visit",
+                    label: ui.message("dispensing.visit"),
+                    formFieldName: "visit",
+                    hideEmptyLabel: true,
+                    options: visitOptions
+            ])}
+        </p>
+    </div>
+
 
     <div id="medication-list">
         <h3>${ ui.message("dispensing.medication.lastDispensedByPatient") }</h3>
@@ -140,13 +158,13 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
 <% } else { %>
 
 <h1>
-    ${ ui.message("coreapps.noActiveVisit") }
+    ${ ui.message("dispensing.noRecentVisit") }
 </h1>
 
 <div id="actions">
     <button class="cancel big">
         <i class="icon-arrow-left"></i>
-        ${ ui.message("mirebalias.outpatientVitals.noVisit.findAnotherPatient") }
+        ${ ui.message("dispensing.noRecentVisit.findAnotherPatient") }
     </button>
 </div>
 

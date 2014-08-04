@@ -2,6 +2,8 @@ package org.openmrs.module.dispensing.page.controller;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.joda.time.DateTime;
+import org.joda.time.Months;
 import org.openmrs.Form;
 import org.openmrs.Location;
 import org.openmrs.Patient;
@@ -44,13 +46,14 @@ public class PatientPageController {
         Form dispensingForm = formService.getFormByUuid("ba22eda5-148d-456e-8adc-f36247d1f7c3");
 
         Location visitLocation = adtService.getLocationThatSupportsVisits(emrContext.getSessionLocation());
-        VisitDomainWrapper activeVisit = adtService.getActiveVisit(patient, visitLocation);
+
+        List<VisitDomainWrapper> visits = adtService.getVisits(patient, visitLocation, new DateTime().minus(Months.ONE).toDate(), null);
 
         //get all dispensing encounters
-        List<DispensedMedication> dispensedMedicationList = dispensingService.getDispensedMedication(patient, null, null, null, null, null);
+        List < DispensedMedication > dispensedMedicationList = dispensingService.getDispensedMedication(patient, null, null, null, null, null);
 
         model.addAttribute("dispensedMedicationList", dispensedMedicationList != null ? dispensedMedicationList : null);
-        model.addAttribute("visit", activeVisit != null ? activeVisit.getVisit() : null);
+        model.addAttribute("visits", visits);
         model.addAttribute("patient", patientDomainWrapper);
         model.addAttribute("breadcrumbOverride", ui.toJson(Arrays.asList(appHomepageBreadcrumb, patientPageBreadcrumb)));
 
