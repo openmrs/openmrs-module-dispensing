@@ -16,7 +16,8 @@
 
 <%
     def visitOptions = visits?.collect {
-        return [ label: ui.format(it.visit.startDatetime) + " - " + ui.format(it.visit.stopDatetime),
+        return [ label: ui.format(it.visit.startDatetime) + " - "
+                        + (it.visit.stopDatetime ? ui.format(it.visit.stopDatetime) :  ui.message("dispensing.active")),
                  value: it.visit.id ];
     }
 %>
