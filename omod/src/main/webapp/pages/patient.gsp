@@ -16,8 +16,9 @@
 
 <%
     def visitOptions = visits?.collect {
-        return [ label: ui.format(it.visit.startDatetime) + " - "
-                        + (it.visit.stopDatetime ? ui.format(it.visit.stopDatetime) :  ui.message("dispensing.active")),
+        return [ label: ui.format(it.startDatetime) + " - "
+                        + (it.stopDatetime ? ui.format(it.stopDatetime) :  ui.message("dispensing.active")) + " - "
+                        + ui.format(it.earliestCheckInEncounter?.location ?: it.earliestEncounter?.location),
                  value: it.visit.id ];
     }
 %>
