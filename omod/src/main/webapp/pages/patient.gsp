@@ -16,9 +16,10 @@
 
 <%
     def visitOptions = visits?.collect {
+        def earliestEncounterLocation = it.earliestCheckInEncounter?.location ?: it.earliestEncounter?.location;
         return [ label: ui.format(it.startDatetime) + " - "
-                        + (it.stopDatetime ? ui.format(it.stopDatetime) :  ui.message("dispensing.active")) + " - "
-                        + ui.format(it.earliestCheckInEncounter?.location ?: it.earliestEncounter?.location),
+                        + (it.stopDatetime ? ui.format(it.stopDatetime) :  ui.message("dispensing.active"))
+                        + (earliestEncounterLocation ? " - " + ui.format(earliestEncounterLocation) : ""),
                  value: it.visit.id ];
     }
 %>
