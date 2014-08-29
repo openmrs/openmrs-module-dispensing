@@ -16,11 +16,9 @@
         window.location.reload();
     }
 
-    <% if (featureToggles.isFeatureEnabled("newPatientSearchWidget")) { %>
-        jq(function() {
-            jq('#patient-search').focus();
-        });
-    <% } %>
+    jq(function() {
+        jq('#patient-search').focus();
+    });
 
 </script>
 
@@ -32,21 +30,11 @@
     ${ ui.message("dispensing.app.label") }
 </h1>
 
-<% if (featureToggles.isFeatureEnabled("newPatientSearchWidget")) { %>
 
-    ${ ui.message("dispensing.searchPatientHeading") }
-    ${ ui.includeFragment("coreapps", "patientsearch/patientSearchWidget",
-            [ afterSelectedUrl: '/dispensing/patient.page?patientId={{patientId}}',
-                    showLastViewedPatients: 'false' ])}
-
-<% } else {%>
-
-    ${ ui.includeFragment("emr", "widget/findPatient", [
-            targetPageProvider: "dispensing",
-            targetPage: "patient"
-    ]) }
-
-<% } %>
+${ ui.message("dispensing.searchPatientHeading") }
+${ ui.includeFragment("coreapps", "patientsearch/patientSearchWidget",
+        [ afterSelectedUrl: '/dispensing/patient.page?patientId={{patientId}}',
+                showLastViewedPatients: 'false' ])}
 
 
 <div class="container">
