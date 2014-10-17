@@ -34,14 +34,14 @@
 	
 	<properties>
 		<openMRSVersion>1.9.4</openMRSVersion>
-        <emrapiVersion>1.3-SNAPSHOT</emrapiVersion>
+        <emrapiVersion>1.3</emrapiVersion>
         <uiframeworkVersion>3.0</uiframeworkVersion>
         <appuiVersion>1.0</appuiVersion>
 		<appframeworkVersion>2.0</appframeworkVersion>
         <htmlformentryVersion>2.3</htmlformentryVersion>
         <htmlformentryuiVersion>1.0</htmlformentryuiVersion>
         <providermanagementModuleVersion>2.1</providermanagementModuleVersion>
-        <reportingVersion>0.9.1-SNAPSHOT</reportingVersion>
+        <reportingVersion>0.9.1</reportingVersion>
         <serializationXstreamModuleVersion>0.2.7</serializationXstreamModuleVersion>
         <calculationModuleVersion>1.0</calculationModuleVersion>
 
