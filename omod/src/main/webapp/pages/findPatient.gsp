@@ -18,6 +18,11 @@
 
     jq(function() {
         jq('#patient-search').focus();
+
+        // make sure we reload the page if the location is changes; this custom event is emitted by by the location selector in the header
+        jq(document).on('sessionLocationChanged', function() {
+            window.location.reload();
+        });
     });
 
 </script>
