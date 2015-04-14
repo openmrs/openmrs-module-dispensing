@@ -117,7 +117,6 @@
                 <div style="display:none">
                     <encounterProviderAndRole default="currentUser"
                                               encounterRole="bad21515-fd04-4ff6-bfcd-78456d12f168" providerRoles="8fd1552e-6cb9-4719-b198-23a2c512a073" required="true"/>
-                    <encounterLocation default="SessionAttribute:emrContext.sessionLocationId"/>
                 </div>
 
                 <ifMode mode="ENTER">
@@ -127,7 +126,7 @@
                     </td>
                     <td>
                         <label><uimessage code="emr.location"/></label>
-                        <span><lookup complexExpression="$ui.format($sessionContext.sessionLocation)"/></span>
+                        <span> <encounterLocation default="SessionAttribute:emrContext.sessionLocationId" tags="Dispensing Location"/></span>
                     </td>
                 </ifMode>
 
