@@ -113,7 +113,7 @@
                 </td>
             </includeIf>
 
-            <includeIf velocityTest="($user.hasRole('Application Role: pharmacist') || $user.hasRole('Application Role: pharmacyAide')) and !$user.hasRole('Application Role: sysAdmin')">
+            <includeIf velocityTest="($user.hasRole('Application Role: pharmacist') || $user.hasRole('Application Role: pharmacyAide') || $user.hasRole('Application Role: pharmacyManager'))  and !$user.hasRole('Application Role: sysAdmin')">
                 <div style="display:none">
                     <encounterProviderAndRole default="currentUser"
                                               encounterRole="bad21515-fd04-4ff6-bfcd-78456d12f168" providerRoles="8fd1552e-6cb9-4719-b198-23a2c512a073" required="true"/>
