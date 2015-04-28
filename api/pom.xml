@@ -13,12 +13,20 @@
     <name>Dispensing Module API</name>
     <description>API project for Dispensing</description>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.openmrs.module</groupId>
-            <artifactId>emrapi-api-1.9</artifactId>
-            <version>${emrapiVersion}</version>
-        </dependency>
-    </dependencies>
+    <build>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <testResources>
+            <testResource>
+                <directory>src/test/resources</directory>
+                <filtering>true</filtering>
+            </testResource>
+        </testResources>
+    </build>
 
 </project>
