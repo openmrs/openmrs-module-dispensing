@@ -3,10 +3,13 @@ package org.openmrs.module.dispensing.importer;
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
+import org.apache.commons.lang3.StringUtils;
 import org.openmrs.Concept;
 import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
@@ -28,7 +31,11 @@ public class DrugImporter {
     @Autowired
     private ConceptService conceptService;
 
+    private Map<String, String> dosageFormShortcuts = new HashMap<String, String>();
+
     public DrugImporter() {
+        dosageFormShortcuts.put("Tablet", "SNOMED CT:385055001");
+        dosageFormShortcuts.put("Capsule", "SNOMED CT:428641000");
     }
 
     private CellProcessor[] getCellProcessors() {
@@ -36,7 +43,8 @@ public class DrugImporter {
                 new Optional(new Trim()),               // uuid
                 new Optional(new Trim()),   // OpenBoxes code
                 new Trim(),                 // Name
-                new Optional(new Trim())    // Concept Code
+                new Optional(new Trim()),   // Concept Code
+                new Optional(new Trim())    // Dosage Form
         };
     }
 
@@ -102,6 +110,16 @@ public class DrugImporter {
                     notes.addError("At " + productName + ", found multiple candidate concepts named " + genericName + ": " + possibleConcepts);
                 } else {
                     notes.addNote(productName + " -> (auto-mapped) " + possibleConcepts.get(0).getNames().iterator().next().getName());
+                }
+            }
+
+            if (StringUtils.isNotEmpty(row.getDosageForm())) {
+                Concept concept = getConcept(row.getDosageForm(), dosageFormShortcuts);
+                if (concept == null) {
+                    notes.addError("dosage form concept not found: " + row.getDosageForm());
+                }
+                else {
+                    notes.addNote(row.getDosageForm() + " -> " + concept.getId());
                 }
             }
         }
@@ -174,6 +192,16 @@ public class DrugImporter {
                 }
                 drug.setConcept(concept);
 
+                // set dosage form
+                if (StringUtils.isNotEmpty(row.getDosageForm())) {
+                    Concept dosageForm = getConcept(row.getDosageForm(), dosageFormShortcuts);
+                    if (dosageForm == null) {
+                        // we should never get here, because validation should have been run
+                        throw new RuntimeException("Specified concept not found: " + row.getDosageForm());
+                    }
+                    drug.setDosageForm(dosageForm);
+                }
+
                 // note that we currently don't store the inventory code anywhere!
 
                 conceptService.saveDrug(drug);
@@ -182,6 +210,17 @@ public class DrugImporter {
             return notes;
         }
 
+    }
+
+    private Concept getConcept(String code, Map<String, String> shortcuts) {
+        if (shortcuts != null && shortcuts.get(code) != null) {
+            String shortcut = shortcuts.get(code);
+            Concept concept = emrConceptService.getConcept(shortcut);
+            if (concept != null) {
+                return concept;
+            }
+        }
+        return emrConceptService.getConcept(code);
     }
 
     private List<DrugImporterRow> readSpreadsheet(Reader csvFileReader) throws IOException  {

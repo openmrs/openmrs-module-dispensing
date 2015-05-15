@@ -4,7 +4,7 @@ public class DrugImporterRow {
 
     // Inventory code currently not used
 
-    public static final String[] FIELD_COLUMNS = { "uuid", "inventoryCode", "productName", "concept" };
+    public static final String[] FIELD_COLUMNS = { "uuid", "inventoryCode", "productName", "concept", "dosageForm" };
 
     private String uuid;
 
@@ -13,6 +13,8 @@ public class DrugImporterRow {
     private String productName;
 
     private String concept;
+
+    private String dosageForm;
 
     public String getUuid() {
         return uuid;
@@ -44,5 +46,13 @@ public class DrugImporterRow {
 
     public void setConcept(String concept) {
         this.concept = concept;
+    }
+
+    public String getDosageForm() {
+        return dosageForm;
+    }
+
+    public void setDosageForm(String dosageForm) {
+        this.dosageForm = dosageForm;
     }
 }
