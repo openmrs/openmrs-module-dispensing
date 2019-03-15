@@ -56,20 +56,21 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
 
 <div class="container">
 
-    <h1>${ ui.message("dispensing.confirmPatientQuestion") }</h1>
+    <% if (showConfirmPatient) { %>
+        <h1>${ ui.message("dispensing.confirmPatientQuestion") }</h1>
 
-    <div id="actions" class="half-width">
-        <button class="confirm big right">
-            <i class="icon-arrow-right"></i>
-            ${ ui.message("dispensing.findpatient.confirm.yes") }
-        </button>
+        <div id="actions" class="half-width">
+            <button class="confirm big right">
+                <i class="icon-arrow-right"></i>
+                ${ ui.message("dispensing.findpatient.confirm.yes") }
+            </button>
 
-        <button class="cancel big">
-            <i class="icon-arrow-left"></i>
-            ${ ui.message("dispensing.findpatient.confirm.no") }
-        </button>
-    </div>
-
+            <button class="cancel big">
+                <i class="icon-arrow-left"></i>
+                ${ ui.message("dispensing.findpatient.confirm.no") }
+            </button>
+        </div>
+    <% } %>
     <div id="visit-options">
         <p>
             ${ ui.includeFragment("uicommons", "field/dropDown", [

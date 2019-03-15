@@ -32,6 +32,8 @@ public class PatientPageController {
                            UiUtils ui,
                            UiSessionContext emrContext,
                            PageModel model,
+                           @RequestParam(value = "showConfirmPatient", required=false) Boolean showConfirmPatient,
+                           @RequestParam(value = "breadcrumbOverride", required = false) String breadcrumbOverride,
                            @SpringBean("formService") FormService formService,
                            @SpringBean("adtService") AdtService adtService,
                            @SpringBean("dispensingService") DispensingService dispensingService,
@@ -55,7 +57,8 @@ public class PatientPageController {
         model.addAttribute("dispensedMedicationList", dispensedMedicationList != null ? dispensedMedicationList : null);
         model.addAttribute("visits", visits);
         model.addAttribute("patient", patientDomainWrapper);
-        model.addAttribute("breadcrumbOverride", ui.toJson(Arrays.asList(appHomepageBreadcrumb, patientPageBreadcrumb)));
+        model.addAttribute("showConfirmPatient", showConfirmPatient != null ? showConfirmPatient : true);
+        model.addAttribute("breadcrumbOverride", breadcrumbOverride != null ? breadcrumbOverride : ui.toJson(Arrays.asList(appHomepageBreadcrumb, patientPageBreadcrumb)));
 
     }
 }
