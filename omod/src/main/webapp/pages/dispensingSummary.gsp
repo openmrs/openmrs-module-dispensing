@@ -8,7 +8,7 @@
   var breadcrumbs = [
     { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
     { label: "${ ui.format(patient.patient.familyName) }, ${ ui.format(patient.patient.givenName) }" , link: '${ui.pageLink("coreapps", "clinicianfacing/patient", [patientId: patient.id])}'},
-    { label: "${ ui.message("dispensing.app.label") }", link: "${ ui.pageLink("dispensing", "findPatient") }" },
+    { label: "${ ui.message("dispensing.app.medication.title") }", link: "${ ui.pageLink("dispensing", "findPatient") }" },
   ];
 
 </script>
