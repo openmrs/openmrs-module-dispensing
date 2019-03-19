@@ -2,12 +2,14 @@
     ui.decorateWith("appui", "standardEmrPage")
 
     ui.includeCss("dispensing", "patient.css")
+
+    def returnUrl = ui.pageLink("coreapps", "clinicianfacing/patient", [patientId: patient.id]);
 %>
 
 <script type="text/javascript">
   var breadcrumbs = [
     { icon: "icon-home", link: '/' + OPENMRS_CONTEXT_PATH + '/index.htm' },
-    { label: "${ ui.format(patient.patient.familyName) }, ${ ui.format(patient.patient.givenName) }" , link: '${ui.pageLink("coreapps", "clinicianfacing/patient", [patientId: patient.id])}'},
+    { label: "${ ui.format(patient.patient.familyName) }, ${ ui.format(patient.patient.givenName) }" , link: '${ returnUrl }'},
     { label: "${ ui.message("dispensing.app.medication.title") }", link: "${ ui.pageLink("dispensing", "findPatient") }" },
   ];
 
@@ -113,12 +115,12 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
 <h1>
     ${ ui.message("dispensing.noRecentVisit") }
 </h1>
-
+<% } %>
 <div id="actions">
-    <button class="cancel big">
+    <button class="cancel big" onclick="location.href='${ returnUrl }'">
         <i class="icon-arrow-left"></i>
-        ${ ui.message("dispensing.noRecentVisit.findAnotherPatient") }
+        ${ ui.message("uicommons.return") }
     </button>
 </div>
 
-<% } %>
+
