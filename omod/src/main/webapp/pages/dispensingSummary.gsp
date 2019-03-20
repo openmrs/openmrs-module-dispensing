@@ -15,35 +15,12 @@
 
 </script>
 
-<%
-    def visitOptions = visits?.collect {
-        def earliestEncounterLocation = it.earliestCheckInEncounter?.location ?: it.earliestEncounter?.location;
-        return [ label: ui.format(it.startDatetime) + " - "
-                + (it.stopDatetime ? ui.format(it.stopDatetime) :  ui.message("dispensing.active"))
-                + (earliestEncounterLocation ? " - " + ui.format(earliestEncounterLocation) : ""),
-                 value: it.visit.id ];
-    }
-%>
-
-
 ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ]) }
 
 
 <% if (visits?.size() > 0) { %>
 
 <div class="container">
-
-    <div id="visit-options">
-        <p>
-            ${ ui.includeFragment("uicommons", "field/dropDown", [
-                    id: "visit",
-                    label: ui.message("dispensing.visit"),
-                    formFieldName: "visit",
-                    hideEmptyLabel: true,
-                    options: visitOptions
-            ])}
-        </p>
-    </div>
 
 
     <div id="medication-list">
