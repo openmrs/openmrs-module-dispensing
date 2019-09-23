@@ -29,30 +29,30 @@ import org.openmrs.ui.framework.resource.ResourceFactory;
  * This class contains the logic that is run every time this module is either started or stopped.
  */
 public class DispensingActivator implements ModuleActivator {
-	
+
 	protected Log log = LogFactory.getLog(getClass());
-		
+
 	/**
 	 * @see ModuleActivator#willRefreshContext()
 	 */
 	public void willRefreshContext() {
 		log.info("Refreshing Dispensing Module");
 	}
-	
+
 	/**
 	 * @see ModuleActivator#contextRefreshed()
 	 */
 	public void contextRefreshed() {
 		log.info("Dispensing Module refreshed");
 	}
-	
+
 	/**
 	 * @see ModuleActivator#willStart()
 	 */
 	public void willStart() {
 		log.info("Starting Dispensing Module");
 	}
-	
+
 	/**
 	 * @see ModuleActivator#started()
 	 */
@@ -64,20 +64,20 @@ public class DispensingActivator implements ModuleActivator {
         }
         catch (Exception e) {
             Module mod = ModuleFactory.getModuleById(DispensingApiConstants.DISPENSING_MODULE_ID);
-            ModuleFactory.stopModule(mod);
+            ModuleFactory.stopModule(mod, true, true);
             throw new RuntimeException("failed to setup the required modules", e);
         }
 
 		log.info("Dispensing Module started");
 	}
-	
+
 	/**
 	 * @see ModuleActivator#willStop()
 	 */
 	public void willStop() {
 		log.info("Stopping Dispensing Module");
 	}
-	
+
 	/**
 	 * @see ModuleActivator#stopped()
 	 */
@@ -102,5 +102,5 @@ public class DispensingActivator implements ModuleActivator {
             }
         }
     }
-		
+
 }
