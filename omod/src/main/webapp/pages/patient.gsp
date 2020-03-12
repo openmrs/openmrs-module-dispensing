@@ -4,12 +4,6 @@
     ui.includeCss("dispensing", "patient.css")
 %>
 
-<style type="text/css">
-    .retiredDrug {
-        color: gray;
-        font-style: italic;
-    }
-</style>
 
 <script type="text/javascript">
     var breadcrumbs = [
