@@ -121,7 +121,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
             %>
             <tr>
                 <td>${ ui.format(medication.dispensedDateTime) }</td>
-                <td class="${medication.drug.retired ? 'retiredDrug' : ''}">${ ui.format(medication.drug.displayName) }, retired: ${ ui.format(medication.drug.retired) }</td>
+                <td class="${medication.drug.retired ? 'retiredDrug' : ''}">${ ui.format(medication.drug.displayName) }</td>
                 <td>${ ui.format(medication.medicationDose.dose) + " " + ui.format(medication.medicationDose.units) }</td>
                 <td>${ ui.format(medication.medicationFrequency.frequency) }</td>
                 <td><% if (medication.medicationDuration) { %>${ ui.format(medication.medicationDuration.duration) + " " + ui.format(medication.medicationDuration.timeUnits) }<% } %></td>
