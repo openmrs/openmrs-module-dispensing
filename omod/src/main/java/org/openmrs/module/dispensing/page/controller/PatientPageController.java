@@ -1,15 +1,17 @@
 package org.openmrs.module.dispensing.page.controller;
 
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.joda.time.DateTime;
 import org.joda.time.Months;
-import org.openmrs.Form;
 import org.openmrs.Location;
 import org.openmrs.Patient;
-import org.openmrs.api.FormService;
+import org.openmrs.module.appframework.domain.AppDescriptor;
+import org.openmrs.module.appframework.service.AppFrameworkService;
 import org.openmrs.module.appui.UiSessionContext;
 import org.openmrs.module.dispensing.DispensedMedication;
+import org.openmrs.module.dispensing.DispensingApiConstants;
 import org.openmrs.module.dispensing.api.DispensingService;
 import org.openmrs.module.emrapi.adt.AdtService;
 import org.openmrs.module.emrapi.patient.PatientDomainWrapper;
@@ -34,18 +36,23 @@ public class PatientPageController {
                            PageModel model,
                            @RequestParam(value = "showConfirmPatient", required=false) Boolean showConfirmPatient,
                            @RequestParam(value = "breadcrumbOverride", required = false) String breadcrumbOverride,
-                           @SpringBean("formService") FormService formService,
+                           @SpringBean("appFrameworkService") AppFrameworkService appFrameworkService,
                            @SpringBean("adtService") AdtService adtService,
                            @SpringBean("dispensingService") DispensingService dispensingService,
                            @InjectBeans PatientDomainWrapper patientDomainWrapper) {
 
         patientDomainWrapper.setPatient(patient);
+
         SimpleObject appHomepageBreadcrumb = SimpleObject.create("label", ui.message("dispensing.app.dispensing.title"),
                 "link", ui.pageLink("dispensing", "findPatient?app=dispensing.app"));
         SimpleObject patientPageBreadcrumb = SimpleObject.create("label",
                 patient.getFamilyName() + ", " + patient.getGivenName(), "link", ui.thisUrlWithContextPath());
 
-        Form dispensingForm = formService.getFormByUuid("ba22eda5-148d-456e-8adc-f36247d1f7c3");
+        AppDescriptor appDescriptor = appFrameworkService.getApp("dispensing.app");
+        String definitionUiResource = appDescriptor.getConfig().get("definitionUiResource").getTextValue();
+        if(StringUtils.isBlank(definitionUiResource)) {
+            definitionUiResource = DispensingApiConstants.DISPENSING_HTML_FORM;
+        }
 
         Location visitLocation = adtService.getLocationThatSupportsVisits(emrContext.getSessionLocation());
 
@@ -59,6 +66,7 @@ public class PatientPageController {
         model.addAttribute("patient", patientDomainWrapper);
         model.addAttribute("showConfirmPatient", showConfirmPatient != null ? showConfirmPatient : true);
         model.addAttribute("breadcrumbOverride", breadcrumbOverride != null ? breadcrumbOverride : ui.toJson(Arrays.asList(appHomepageBreadcrumb, patientPageBreadcrumb)));
+        model.addAttribute("definitionUiResource", definitionUiResource);
 
     }
 }
