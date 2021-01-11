@@ -1,6 +1,5 @@
 package org.openmrs.module.dispensing.page.controller;
 
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.joda.time.DateTime;
@@ -49,8 +48,11 @@ public class PatientPageController {
                 patient.getFamilyName() + ", " + patient.getGivenName(), "link", ui.thisUrlWithContextPath());
 
         AppDescriptor appDescriptor = appFrameworkService.getApp("dispensing.app");
-        String definitionUiResource = appDescriptor.getConfig().get("definitionUiResource").getTextValue();
-        if(StringUtils.isBlank(definitionUiResource)) {
+        String definitionUiResource;
+        if(appDescriptor != null && appDescriptor.getConfig() != null && appDescriptor.getConfig().get("definitionUiResource") !=null) {
+            definitionUiResource = appDescriptor.getConfig().get("definitionUiResource").getTextValue();
+        }
+        else {
             definitionUiResource = DispensingApiConstants.DISPENSING_HTML_FORM;
         }
 
