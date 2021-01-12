@@ -43,7 +43,7 @@ ${ ui.includeFragment("coreapps", "patientHeader", [ patient: patient.patient ])
                 query: {
                     patientId: "${ patient.id }",
                     visitId: jq('#visit-field').val(),
-                    definitionUiResource: "dispensing:htmlforms/dispensing.xml",
+                    definitionUiResource: "${ definitionUiResource }",
                     returnUrl: "${ ui.escapeJs(ui.pageLink("dispensing", "findPatient")) }",
                     breadcrumbOverride: "${ ui.escapeJs(breadcrumbOverride) }"
                 }
