@@ -22,9 +22,10 @@
 	</organization>
 
 	<scm>
-		<connection>scm:git:https://github.com/openmrs/openmrs-module-dispensing</connection>
-		<developerConnection>scm:git:https://github.com/openmrs/openmrs-module-dispensing</developerConnection>
+		<connection>scm:git:git@github.com:openmrs/openmrs-module-dispensing.git</connection>
+		<developerConnection>scm:git:git@github.com:openmrs/openmrs-module-dispensing.git</developerConnection>
 		<url>https://github.com/openmrs/openmrs-module-dispensing</url>
+		<tag>HEAD</tag>
 	</scm>
 
 	<modules>
