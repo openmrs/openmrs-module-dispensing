@@ -9,7 +9,6 @@ import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
 import org.openmrs.module.dispensing.importer.DrugImporter;
 import org.openmrs.module.dispensing.importer.ImportNotes;
-import org.openmrs.module.emrapi.concept.EmrConceptService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,7 +22,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.argThat;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -31,8 +30,6 @@ import static org.mockito.Mockito.when;
 public class DrugImporterTest {
 
     private DrugImporter drugImporter;
-
-    private EmrConceptService emrConceptService;
 
     private ConceptService conceptService;
 
@@ -46,17 +43,14 @@ public class DrugImporterTest {
     public void setup() {
 
         drugImporter = new DrugImporter();
-        emrConceptService = mock(EmrConceptService.class);
         conceptService = mock(ConceptService.class);
-
-        drugImporter.setEmrConceptService(emrConceptService);
         drugImporter.setConceptService(conceptService);
 
         amoxicillinConcept = new Concept();
         ConceptName amoxicillinConceptName = new ConceptName();
         amoxicillinConceptName.setName("Amoxicillin");
         amoxicillinConcept.addName(amoxicillinConceptName);
-        when(emrConceptService.getConcept("b85d8dc0-329d-11e3-aa6e-0800200c9a66")).thenReturn(amoxicillinConcept);
+        when(conceptService.getConceptByReference("b85d8dc0-329d-11e3-aa6e-0800200c9a66")).thenReturn(amoxicillinConcept);
 
         amitriptylineHydrochlorideConcept = new Concept();
         ConceptName amitriptylineHydrochlorideConceptName = new ConceptName();
@@ -125,7 +119,7 @@ public class DrugImporterTest {
     public void drugListShouldFailValidationIfNoMatchingConceptWithUuid() throws IOException {
 
         // override an existing when from the setup
-        when(emrConceptService.getConcept("b85d8dc0-329d-11e3-aa6e-0800200c9a66")).thenReturn(null);
+        when(conceptService.getConceptByReference("b85d8dc0-329d-11e3-aa6e-0800200c9a66")).thenReturn(null);
 
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("drug-list-test.csv");
         InputStreamReader reader = new InputStreamReader(inputStream);
@@ -274,7 +268,7 @@ public class DrugImporterTest {
     }
 
 
-    private class IsExpectedDrug extends ArgumentMatcher<Drug> {
+    private class IsExpectedDrug implements ArgumentMatcher<Drug> {
 
         Drug expectedDrug;
 
@@ -283,17 +277,14 @@ public class DrugImporterTest {
         }
 
         @Override
-        public boolean matches(Object o) {
-            Drug actualDrug = (Drug) o;
-
+        public boolean matches(Drug actualDrug) {
             return actualDrug.getName().equals(expectedDrug.getName()) &&
                     actualDrug.getConcept().equals(expectedDrug.getConcept()) &&
                     actualDrug.getUuid() != null;
-
         }
     }
 
-    private class IsExpectedDrugWithUuid extends ArgumentMatcher<Drug> {
+    private class IsExpectedDrugWithUuid implements ArgumentMatcher<Drug> {
 
         Drug expectedDrug;
 
@@ -302,14 +293,10 @@ public class DrugImporterTest {
         }
 
         @Override
-        public boolean matches(Object o) {
-            Drug actualDrug = (Drug) o;
-
+        public boolean matches(Drug actualDrug) {
             return actualDrug.getName().equals(expectedDrug.getName()) &&
                     actualDrug.getConcept().equals(expectedDrug.getConcept()) &&
                     actualDrug.getUuid().equals(expectedDrug.getUuid());
         }
     }
-
-
 }

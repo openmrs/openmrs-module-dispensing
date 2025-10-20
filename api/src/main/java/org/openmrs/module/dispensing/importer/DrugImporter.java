@@ -1,5 +1,17 @@
 package org.openmrs.module.dispensing.importer;
 
+import org.apache.commons.lang3.StringUtils;
+import org.openmrs.Concept;
+import org.openmrs.Drug;
+import org.openmrs.api.ConceptService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.supercsv.cellprocessor.Optional;
+import org.supercsv.cellprocessor.Trim;
+import org.supercsv.cellprocessor.ift.CellProcessor;
+import org.supercsv.io.CsvBeanReader;
+import org.supercsv.prefs.CsvPreference;
+
 import java.io.IOException;
 import java.io.Reader;
 import java.util.ArrayList;
@@ -9,24 +21,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-import org.apache.commons.lang3.StringUtils;
-import org.openmrs.Concept;
-import org.openmrs.Drug;
-import org.openmrs.api.ConceptService;
-import org.openmrs.module.emrapi.concept.EmrConceptService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
-import org.supercsv.cellprocessor.Optional;
-import org.supercsv.cellprocessor.Trim;
-import org.supercsv.cellprocessor.ift.CellProcessor;
-import org.supercsv.io.CsvBeanReader;
-import org.supercsv.prefs.CsvPreference;
-
 @Component
 public class DrugImporter {
-
-    @Autowired
-    private EmrConceptService emrConceptService;
 
     @Autowired
     private ConceptService conceptService;
@@ -54,10 +50,6 @@ public class DrugImporter {
      */
     public void setConceptService(ConceptService conceptService) {
         this.conceptService = conceptService;
-    }
-
-    public void setEmrConceptService(EmrConceptService emrConceptService) {
-        this.emrConceptService = emrConceptService;
     }
 
     public ImportNotes verifySpreadsheet(Reader csvFileReader) throws IOException{
@@ -94,7 +86,7 @@ public class DrugImporter {
             productNames.add(row.getProductName());
 
             if (row.getConcept() != null) {
-                Concept concept = emrConceptService.getConcept(row.getConcept());
+                Concept concept = conceptService.getConceptByReference(row.getConcept());
                 if (concept == null) {
                     notes.addError("Specified concept not found: " + row.getConcept());
                 } else {
@@ -170,7 +162,7 @@ public class DrugImporter {
                 // set concept
                 Concept concept = null;
                 if (row.getConcept() != null) {
-                    concept = emrConceptService.getConcept(row.getConcept());
+                    concept = conceptService.getConceptByReference(row.getConcept());
                     if (concept == null) {
                         // we should never get here, because validation should have been run
                         throw new RuntimeException("Specified concept not found: " + row.getConcept());
@@ -215,12 +207,12 @@ public class DrugImporter {
     private Concept getConcept(String code, Map<String, String> shortcuts) {
         if (shortcuts != null && shortcuts.get(code) != null) {
             String shortcut = shortcuts.get(code);
-            Concept concept = emrConceptService.getConcept(shortcut);
+            Concept concept = conceptService.getConceptByReference(shortcut);
             if (concept != null) {
                 return concept;
             }
         }
-        return emrConceptService.getConcept(code);
+        return conceptService.getConceptByReference(code);
     }
 
     private List<DrugImporterRow> readSpreadsheet(Reader csvFileReader) throws IOException  {
