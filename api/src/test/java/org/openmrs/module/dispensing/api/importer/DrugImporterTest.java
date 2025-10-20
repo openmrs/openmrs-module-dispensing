@@ -9,6 +9,7 @@ import org.openmrs.Drug;
 import org.openmrs.api.ConceptService;
 import org.openmrs.module.dispensing.importer.DrugImporter;
 import org.openmrs.module.dispensing.importer.ImportNotes;
+import org.openmrs.module.emrapi.concept.EmrConceptService;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -31,6 +32,8 @@ public class DrugImporterTest {
 
     private DrugImporter drugImporter;
 
+    private EmrConceptService emrConceptService;
+
     private ConceptService conceptService;
 
     private Concept amoxicillinConcept;
@@ -43,14 +46,17 @@ public class DrugImporterTest {
     public void setup() {
 
         drugImporter = new DrugImporter();
+        emrConceptService = mock(EmrConceptService.class);
         conceptService = mock(ConceptService.class);
+
+        drugImporter.setEmrConceptService(emrConceptService);
         drugImporter.setConceptService(conceptService);
 
         amoxicillinConcept = new Concept();
         ConceptName amoxicillinConceptName = new ConceptName();
         amoxicillinConceptName.setName("Amoxicillin");
         amoxicillinConcept.addName(amoxicillinConceptName);
-        when(conceptService.getConceptByReference("b85d8dc0-329d-11e3-aa6e-0800200c9a66")).thenReturn(amoxicillinConcept);
+        when(emrConceptService.getConcept("b85d8dc0-329d-11e3-aa6e-0800200c9a66")).thenReturn(amoxicillinConcept);
 
         amitriptylineHydrochlorideConcept = new Concept();
         ConceptName amitriptylineHydrochlorideConceptName = new ConceptName();
@@ -119,7 +125,7 @@ public class DrugImporterTest {
     public void drugListShouldFailValidationIfNoMatchingConceptWithUuid() throws IOException {
 
         // override an existing when from the setup
-        when(conceptService.getConceptByReference("b85d8dc0-329d-11e3-aa6e-0800200c9a66")).thenReturn(null);
+        when(emrConceptService.getConcept("b85d8dc0-329d-11e3-aa6e-0800200c9a66")).thenReturn(null);
 
         InputStream inputStream = getClass().getClassLoader().getResourceAsStream("drug-list-test.csv");
         InputStreamReader reader = new InputStreamReader(inputStream);

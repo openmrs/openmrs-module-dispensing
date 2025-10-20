@@ -43,7 +43,7 @@
         <htmlformentryuiVersion>3.0.0</htmlformentryuiVersion>
 		<metadatamappingVersion>1.7.0</metadatamappingVersion>
         <reportingVersion>2.0.0-SNAPSHOT</reportingVersion>
-        <serializationXstreamModuleVersion>0.2.17-SNAPSHOT</serializationXstreamModuleVersion>
+        <serializationXstreamModuleVersion>0.3.0</serializationXstreamModuleVersion>
 		<uiframeworkVersion>4.0.0</uiframeworkVersion>
         <superCsvVersion>2.1.0</superCsvVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
