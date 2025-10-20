@@ -23,7 +23,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
-import static org.mockito.Matchers.argThat;
+import static org.mockito.ArgumentMatchers.argThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -274,7 +274,7 @@ public class DrugImporterTest {
     }
 
 
-    private class IsExpectedDrug extends ArgumentMatcher<Drug> {
+    private class IsExpectedDrug implements ArgumentMatcher<Drug> {
 
         Drug expectedDrug;
 
@@ -283,17 +283,14 @@ public class DrugImporterTest {
         }
 
         @Override
-        public boolean matches(Object o) {
-            Drug actualDrug = (Drug) o;
-
+        public boolean matches(Drug actualDrug) {
             return actualDrug.getName().equals(expectedDrug.getName()) &&
                     actualDrug.getConcept().equals(expectedDrug.getConcept()) &&
                     actualDrug.getUuid() != null;
-
         }
     }
 
-    private class IsExpectedDrugWithUuid extends ArgumentMatcher<Drug> {
+    private class IsExpectedDrugWithUuid implements ArgumentMatcher<Drug> {
 
         Drug expectedDrug;
 
@@ -302,14 +299,10 @@ public class DrugImporterTest {
         }
 
         @Override
-        public boolean matches(Object o) {
-            Drug actualDrug = (Drug) o;
-
+        public boolean matches(Drug actualDrug) {
             return actualDrug.getName().equals(expectedDrug.getName()) &&
                     actualDrug.getConcept().equals(expectedDrug.getConcept()) &&
                     actualDrug.getUuid().equals(expectedDrug.getUuid());
         }
     }
-
-
 }
