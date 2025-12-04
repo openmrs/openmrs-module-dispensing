@@ -37,12 +37,12 @@
 		<openMRSVersion>2.8.0</openMRSVersion>
         <appuiVersion>1.0</appuiVersion>
 		<appframeworkVersion>2.18.0</appframeworkVersion>
-		<calculationModuleVersion>2.0.0-SNAPSHOT</calculationModuleVersion>
-		<emrapiVersion>3.2.0-SNAPSHOT</emrapiVersion>
-        <htmlformentryVersion>7.0.0-SNAPSHOT</htmlformentryVersion>
+		<calculationModuleVersion>2.0.0</calculationModuleVersion>
+		<emrapiVersion>3.2.1</emrapiVersion>
+        <htmlformentryVersion>7.0.0</htmlformentryVersion>
         <htmlformentryuiVersion>3.0.0</htmlformentryuiVersion>
 		<metadatamappingVersion>1.7.0</metadatamappingVersion>
-        <reportingVersion>2.0.0-SNAPSHOT</reportingVersion>
+        <reportingVersion>2.0.0</reportingVersion>
         <serializationXstreamModuleVersion>0.3.0</serializationXstreamModuleVersion>
 		<uiframeworkVersion>4.0.0</uiframeworkVersion>
         <superCsvVersion>2.1.0</superCsvVersion>
