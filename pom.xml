@@ -112,6 +112,12 @@
             <artifactId>htmlformentry-api</artifactId>
             <version>${htmlformentryVersion}</version>
             <scope>provided</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.joda</groupId>
+					<artifactId>joda-convert</artifactId>
+				</exclusion>
+			</exclusions>
         </dependency>
 
         <dependency>
