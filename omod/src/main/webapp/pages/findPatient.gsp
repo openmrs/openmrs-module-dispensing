@@ -78,10 +78,10 @@ ${ ui.includeFragment("coreapps", "patientsearch/patientSearchWidget",
             %>
             <tr>
                 <td>${ ui.format(medication.dispensedDateTime) }</td>
-                <td>${ ui.format(medication.drug.displayName) }</td>
-                <td>${ ui.format(medication.medicationDose.dose) + " " + ui.format(medication.medicationDose.units) }</td>
-                <td>${ ui.format(medication.medicationFrequency.frequency) }</td>
-                <td><% if (medication.medicationDuration) { %>${ ui.format(medication.medicationDuration.duration) + " " + ui.format(medication.medicationDuration.timeUnits) }<% } %></td>
+                <td>${ ui.format(medication.drug?.displayName) }</td>
+                <td>${ ui.format(medication.medicationDose?.dose) + " " + ui.format(medication.medicationDose?.units) }</td>
+                <td>${ ui.format(medication.medicationFrequency?.frequency) }</td>
+                <td>${ ui.format(medication.medicationDuration?.duration) + " " + ui.format(medication.medicationDuration?.timeUnits) }</td>
                 <td>${ ui.format(medication.quantityDispensed) }</td>
                 <td>${ ui.format(medication.timingOfHospitalPrescription)  + " - " + ui.format(medication.dischargeLocation)}  </td>
                 <td>${ ui.format(medication.administrationInstructions) }</td>
